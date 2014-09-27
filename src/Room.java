@@ -13,19 +13,19 @@ public class Room {
     int frame = 0; //DEMO...DELETE LATER
        
     public Room(int level) {
-	
+    	
     }
 
     public void update(float dt) {
-	y = (int)(100*Math.sin((double)this.frame/10)) + 200;
-	frame++;
+	y = (int)(100*Math.sin((double)this.frame/10)) + 200; //DEMO...DELETE LATER
+	frame++; //DEMO...DELETE LATER
     }
 
     public void draw(Graphics2D g) {
-	g.setColor(Color.black);
-	g.fillRect(0 , 0 , 280 , 400);
-	g.setColor(Color.red);
-	g.drawLine(0, y, 280, y);
+	g.setColor(Color.black); //DEMO...DELETE LATER
+	g.fillRect(0 , 0 , 280 , 400); //DEMO...DELETE LATER
+	g.setColor(Color.red); //DEMO...DELETE LATER
+	g.drawLine(0, y, 280, y); //DEMO...DELETE LATER
     }
 
     public void keyPressed(KeyEvent e) {

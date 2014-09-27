@@ -1,9 +1,9 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class PacmanGame extends JFrame {
 
     public boolean running = true;
@@ -21,10 +21,10 @@ public class PacmanGame extends JFrame {
     //Game Initialization - Place something here if you only want it to happen globally when the game is started.
     public void initGame() {
 	JFrame frame = this;
-	frame.setMinimumSize(new Dimension(280 , 400));
+	frame.setMinimumSize(new Dimension(280 , 400)); //Fixed resolution - Don't change, timing and graphics rely on this resolution.
 	frame.setTitle("Pacman");
 	frame.pack();
-	frame.show();
+	frame.setVisible(true);
 	currentRoom = new Room(1); //Start at level one
 
 	//GAME LOOP 	//GAME LOOP 	//GAME LOOP 	//GAME LOOP 
@@ -43,7 +43,7 @@ public class PacmanGame extends JFrame {
 	    long timeComputationEnd = System.currentTimeMillis();
 	    long timeComputationTaken = timeComputationEnd - timeComputationStart;
 	    long timeToSleep = this.timeInterval - timeComputationTaken;
-	    Thread.currentThread().sleep(timeToSleep);
+	    Thread.sleep(timeToSleep);
 	    } catch (Exception e) {
 		System.err.println("ERROR: Could not sleep main thread.");
 		e.printStackTrace();
@@ -70,5 +70,6 @@ public class PacmanGame extends JFrame {
 
     public static void main(String[] args) {
 	PacmanGame game = new PacmanGame();
+	System.out.println(game.getTitle());
     }
 }

@@ -1,10 +1,7 @@
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.Rectangle;
-import java.awt.Point;
 import java.awt.Graphics2D;
-
-
 
 public class GameObject {
 
@@ -12,7 +9,7 @@ public class GameObject {
     Rectangle boundingBox = new Rectangle();
 
     public boolean intersects(GameObject other) {
-
+    	return true;
     }
 
     public void update(float dt) {
