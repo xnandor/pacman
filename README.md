@@ -1,5 +1,5 @@
 pacman
 ======
 
-Pacman clone
+Pacman Clone
 
