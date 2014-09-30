@@ -5,14 +5,14 @@ public class Dot extends GameObject {
     boolean exists = true;
     
     public boolean doesExist() {
-		return exists;
-	}
+	return exists;
+    }
 	
-	public void consume() {
-		exists = false;
-	}
+    public void consume() {
+	exists = false;
+    }
 	
-	public void update(float dt) {
+    public void update(float dt) {
 
     }
 
