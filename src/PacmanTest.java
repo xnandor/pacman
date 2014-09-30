@@ -23,5 +23,24 @@ public class PacmanTest {
 		assertTrue("Pacman is super:", pacman.isSuper);
 	}
 	//////////////////////////////////////////////////
-
+    
+    //Brian Hester's tests
+    //////////////////////////////////////////////////
+    @Test
+    public void isGhostEatableTest() {
+        Ghost ghost = new Ghost();
+        assertFalse("Ghost is not eatable: ",ghost.isEatable());
+        ghost.eatable();
+        assertTrue("Ghost is eatable: ",ghost.isEatable());
+    }
+    
+    @Test
+    public void isOutOfLives() {
+        Pacman pacman = new Pacman();
+        assertFalse("Pacman has more lives: ",pacman.isOutOfLives());
+        pacman.loseLife();
+        pacman.loseLife();
+        assertTrue("Pacman is out of lives: ",pacman.isOutOfLives());
+    }
+    //////////////////////////////////////////////////
 }

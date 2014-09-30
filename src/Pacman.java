@@ -6,6 +6,7 @@ public class Pacman extends GameObject implements KeyListener {
 
 	boolean isSuper = false;
 	boolean isLiving = true;
+    int lives = 2;
 	
 	public boolean isSuperPacman() {
 		return isSuper;
@@ -14,8 +15,20 @@ public class Pacman extends GameObject implements KeyListener {
 	public boolean isAlive() {
 		return isLiving;
 	}
-	
-	public void kill() {
+    
+    public boolean isOutOfLives() {
+        if(lives > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    public void loseLife() {
+        lives--;
+    }
+    
+    public void kill() {
 		isLiving = false;
 	}
 	
