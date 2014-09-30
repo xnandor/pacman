@@ -23,5 +23,24 @@ public class PacmanTest {
 		assertTrue("Pacman is super:", pacman.isSuper);
 	}
 	//////////////////////////////////////////////////
-
+	
+	//Nathan Dolzonek's tests
+	//////////////////////////////////////////////////
+	@Test
+	public void pacmanMovesUp() {
+		Pacman pacman = new Pacman();
+		int y = pacman.getY();
+		pacman.moveUp();
+		assertTrue("Pacman moved up: ", y < pacman.getY());
+		assertFalse("Pacman failed to move up: ", y >= pacman.getY());
+	}
+	
+	@Test
+	public void doesDotExist() {
+		Dot dot = new Dot(); //will have to implement class Dot (extends GameObject?)
+		assertTrue("Dot exists: ", dot.doesExist());
+		dot.consume();
+		assertFalse("dot does not exist", dot.doesExist());	
+	}
+	//////////////////////////////////////////////////
 }
