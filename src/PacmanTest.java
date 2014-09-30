@@ -57,7 +57,7 @@ public class PacmanTest {
 
     @Test
     public void doesDotExist() {
-	Dot dot = new Dot(); //will have to implement class Dot (extends GameObject?)
+	Dot dot = new Dot();
 	assertTrue("Dot exists: ", dot.doesExist());
 	dot.consume();
 	assertFalse("dot does not exist", dot.doesExist());	
