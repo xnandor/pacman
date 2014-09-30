@@ -4,17 +4,19 @@ import java.awt.Graphics2D;
 
 public class Pacman extends GameObject implements KeyListener {
 
-	boolean isSuper = false;
-	boolean isLiving = true;
+    boolean isSuper = false;
+    boolean isLiving = true;
     int lives = 2;
+    int xPos;
+    int yPos;
 	
-	public boolean isSuperPacman() {
-		return isSuper;
-	}
+    public boolean isSuperPacman() {
+	return isSuper;
+    }
 	
-	public boolean isAlive() {
-		return isLiving;
-	}
+    public boolean isAlive() {
+	return isLiving;
+    }
     
     public boolean isOutOfLives() {
         if(lives > 0) {
@@ -29,12 +31,24 @@ public class Pacman extends GameObject implements KeyListener {
     }
     
     public void kill() {
-		isLiving = false;
-	}
+	isLiving = false;
+    }
 	
-	public void powerUp() {
-		isSuper = true;
-	}
+    public void powerUp() {
+	isSuper = true;
+    }
+	
+    public int getX() {
+	return xPos;
+    }
+	
+    public int getY() {
+	return yPos;
+    }
+	
+    public void moveUp(){
+	yPos ++;
+    }
 	
     public void update(float dt) {
 
@@ -55,7 +69,6 @@ public class Pacman extends GameObject implements KeyListener {
     public void keyTyped(KeyEvent e) {
 
     }
-
 
 }
 
