@@ -2,7 +2,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.Graphics2D;
 
-public class Ghost extends GameObject implements KeyListener {
+public class Ghost extends GameObject {
     
     boolean isLiving = true;
     boolean isEatable = false;
@@ -25,20 +25,7 @@ public class Ghost extends GameObject implements KeyListener {
     
     public void draw(Graphics2D g) {
         
-    }
-    
-    public void keyPressed(KeyEvent e) {
-        
-    }
-    
-    public void keyReleased(KeyEvent e) {
-        
-    }
-    
-    public void keyTyped(KeyEvent e) {
-        
-    }
-    
+    }    
     
 }
 
