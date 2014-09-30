@@ -37,20 +37,20 @@ public class Pacman extends GameObject implements KeyListener {
     }
 	
     public int getX() {
-	return boundingBox.getX();
+	return (int)boundingBox.getX();
     }
 	
     public int getY() {
-	return boundingBox.getY();
+	return (int)boundingBox.getY();
     }
 	
     public void moveUp(){
-	boundingBox.setLocation(boundingBox.getX(), boundingBox.getY()-1);
+	boundingBox.setLocation((int)boundingBox.getX(), (int)boundingBox.getY()-1);
     }
 			
     public void moveLeft()
     {
-	boundingBox.setLocation(boundingBox.getX()-1, boundingBox.getY());
+	boundingBox.setLocation((int)boundingBox.getX()-1, (int)boundingBox.getY());
     }
 	
     public int extraLife()
