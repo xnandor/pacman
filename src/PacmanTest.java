@@ -80,9 +80,9 @@ public class PacmanTest {
 	Dot dot = new Dot();
 	dot.consume();
 	// ***** Commented Out by Eric Since it won't compile without method signature and return.
-	//  dot.incrementpoints();//Need to implement points counter in Dot class
-	//  assertTrue("Pacman gets a life:", pacman.extralife() <= dot.incrementpoints());
-	//  assertFalse("Pacman doesn't get a life:", pacman.extralife() > dot.incrementpoints());
+	Dot.incrementPoints();//Need to implement points counter in Dot class
+	assertTrue("Pacman gets a life:", pacman.extraLife() <= Dot.incrementPoints());
+	assertFalse("Pacman doesn't get a life:", pacman.extraLife() > Dot.incrementPoints());
 	// ***** End Commented Out by Eric Since it won't compile without method
     }
     /////////////////////////////////////////////////////////

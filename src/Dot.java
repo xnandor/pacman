@@ -4,6 +4,13 @@ public class Dot extends GameObject {
 	
     boolean exists = true;
     
+    public static int incrementPoints()
+    {  
+    	int points = 0;
+    	points++;
+    	return points;
+    }
+    
     public boolean doesExist() {
 	return exists;
     }
