@@ -22,6 +22,18 @@ public class Pacman extends GameObject implements KeyListener {
 	public void powerUp() {
 		isSuper = true;
 	}
+			
+	public void moveLeft()
+	{
+		
+		xPos--;
+	}
+	
+	public int extraLife()
+	{
+		int points = 10000;
+		return points;
+	}
 	
     public void update(float dt) {
 

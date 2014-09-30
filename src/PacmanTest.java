@@ -23,5 +23,33 @@ public class PacmanTest {
 		assertTrue("Pacman is super:", pacman.isSuper);
 	}
 	//////////////////////////////////////////////////
+	
+	
+	//Jared Griffith's tests//Can commit changes//
+	//Was not able to be tested//
+	@Test
+	public void moveLeftTest()
+	{
+	  Pacman pacman = new Pacman();
+	  int x = pacman.getX();
+	  pacman.moveLeft();
+	  assertTrue("Pacman moved left:", x > pacman.getX());
+	  assertFalse("Pacman did not move:", x <= pacman.getX());
+		
+	}
+	
+	
+	@Test
+	public void extraLifeTest()
+	{
+	   Pacman pacman = new Pacman();
+	   Dot dot = new Dot();
+	   dot.consume();
+	   dot.incrementpoints();//Need to implement points counter in Dot class
+	   assertTrue("Pacman gets a life:", pacman.extralife() <= dot.incrementpoints());
+	   assertFalse("Pacman doesn't get a life:", pacman.extralife() > dot.incrementpoints());	      
+		
+	}
+	/////////////////////////////////////////////////////////
 
 }
