@@ -6,6 +6,8 @@ public class Pacman extends GameObject implements KeyListener {
 
 	boolean isSuper = false;
 	boolean isLiving = true;
+	int xPos;
+	int yPos;
 	
 	public boolean isSuperPacman() {
 		return isSuper;
@@ -21,6 +23,18 @@ public class Pacman extends GameObject implements KeyListener {
 	
 	public void powerUp() {
 		isSuper = true;
+	}
+	
+	public int getX() {
+		return xPos;
+	}
+	
+	public int getY() {
+		return yPos;
+	}
+	
+	public void moveUp(){
+		yPos ++;
 	}
 	
     public void update(float dt) {
