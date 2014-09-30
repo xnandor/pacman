@@ -9,18 +9,18 @@ public class PacmanTest {
     //////////////////////////////////////////////////
     @Test
     public void isAliveTest() {
-	Pacman pacman = new Pacman();
-	assertTrue("Pacman is alive: ",pacman.isAlive());
-	pacman.kill();
-	assertFalse("Pacman is dead:", pacman.isAlive());
-    }
+		Pacman pacman = new Pacman();
+		assertTrue("Pacman is alive: ",pacman.isAlive());
+		pacman.kill();
+		assertFalse("Pacman is dead:", pacman.isAlive());
+	    }
 	
     @Test
     public void isSuperTest() {
-	Pacman pacman = new Pacman();
-	assertFalse("Pacman is not super:", pacman.isSuperPacman());
-	pacman.powerUp();
-	assertTrue("Pacman is super:", pacman.isSuper);
+		Pacman pacman = new Pacman();
+		assertFalse("Pacman is not super:", pacman.isSuperPacman());
+		pacman.powerUp();
+		assertTrue("Pacman is super:", pacman.isSuper);
     }
     //////////////////////////////////////////////////
 
@@ -48,19 +48,19 @@ public class PacmanTest {
     //////////////////////////////////////////////////
     @Test
     public void pacmanMovesUp() {
-	Pacman pacman = new Pacman();
-	int y = pacman.getY();
-	pacman.moveUp();
-	assertTrue("Pacman moved up: ", y < pacman.getY());
-	assertFalse("Pacman failed to move up: ", y >= pacman.getY());
+		Pacman pacman = new Pacman();
+		int y = pacman.getY();
+		pacman.moveUp();
+		assertTrue("Pacman moved up: ", y < pacman.getY());
+		assertFalse("Pacman failed to move up: ", y >= pacman.getY());
     }
 	
     @Test
     public void doesDotExist() {
-	Dot dot = new Dot(); //will have to implement class Dot (extends GameObject?)
-	assertTrue("Dot exists: ", dot.doesExist());
-	dot.consume();
-	assertFalse("dot does not exist", dot.doesExist());	
+		Dot dot = new Dot(); //will have to implement class Dot (extends GameObject?)
+		assertTrue("Dot exists: ", dot.doesExist());
+		dot.consume();
+		assertFalse("dot does not exist", dot.doesExist());	
     }
     //////////////////////////////////////////////////
 }

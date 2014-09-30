@@ -1,5 +1,3 @@
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.Graphics2D;
 
 public class Ghost extends GameObject {
@@ -17,6 +15,10 @@ public class Ghost extends GameObject {
     
     public void eatable() {
         isEatable = true;
+    }
+    
+    public boolean isEatable() {
+    	return isEatable;
     }
     
     public void update(float dt) {
