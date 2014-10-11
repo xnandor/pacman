@@ -21,6 +21,7 @@ public class Room implements KeyListener {
     public void update(float dt) {
 	currentPacman.update(dt);
 
+	//DEBUG
 	if (PacmanGame.DEBUG) {
 	    y = (int)(100*Math.sin((double)this.frame/10)) + 200;
 	    frame++;
@@ -30,14 +31,16 @@ public class Room implements KeyListener {
     public void draw(Graphics2D g) {
 	//Setup background color
 	g.setColor(Color.black);
-	//Fill background
 	g.fillRect(0 , 0 , 280 , 400);
-	currentPacman.draw(g);
 
+	//DEBUG
 	if (PacmanGame.DEBUG) {
 	    g.setColor(Color.white); //DEMO...DELETE LATER
 	    g.drawLine(0, y, 280, y); //DEMO...DELETE LATER
 	}
+
+	currentPacman.draw(g);
+
     }
 
     public void keyPressed(KeyEvent e) {
