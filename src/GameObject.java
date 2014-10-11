@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 
 public class GameObject {
 
-    ArrayList<BufferedImage> images = new ArrayList<BufferedImage>(); //Frames to animate
-    Rectangle boundingBox = new Rectangle();
+    public ArrayList<BufferedImage> images = new ArrayList<BufferedImage>(); //Frames to animate
+    public Rectangle boundingBox = new Rectangle();
 
     public boolean intersects(GameObject other) {
     	return true;

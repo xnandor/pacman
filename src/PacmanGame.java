@@ -2,10 +2,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class PacmanGame extends JFrame {
 
+    GamePanel gamePanel = new GamePanel();
+    public Graphics g;
     public boolean running = true;
     public long dt = 0L;
     public long timePreviousFrame = System.currentTimeMillis();
@@ -23,34 +26,37 @@ public class PacmanGame extends JFrame {
 	JFrame frame = this;
 	frame.setMinimumSize(new Dimension(280 , 400)); //Fixed resolution - Don't change, timing and graphics rely on this resolution.
 	frame.setTitle("Pacman");
+	g = frame.getContentPane().getGraphics();
+	frame.getContentPane().add(gamePanel);
+	currentRoom = new Room(1); //Start at level one
+	gamePanel.room = currentRoom;
 	frame.pack();
 	frame.setVisible(true);
-	currentRoom = new Room(1); //Start at level one
+	while (running) {
+	    gameLoop();
+	}
+    }
 
-	//GAME LOOP 	//GAME LOOP 	//GAME LOOP 	//GAME LOOP 
-	Graphics2D g = (Graphics2D)frame.getContentPane().getGraphics();
-	while (this.running) {
-	    //CLOCK
-	    this.timeCurrentFrame = System.currentTimeMillis();
-	    this.dt = this.timeCurrentFrame - this.timePreviousFrame;
-	    this.timePreviousFrame = this.timeCurrentFrame;
-	    long timeComputationStart = System.currentTimeMillis();
-	    //UPDATE AND DRAW
-	    this.update(dt);
-	    this.paintComponent(g);
-	    //SLEEP IF NEEDED
-	    try {
+    public void gameLoop() {
+	//CLOCK
+	this.timeCurrentFrame = System.currentTimeMillis();
+	this.dt = this.timeCurrentFrame - this.timePreviousFrame;
+	this.timePreviousFrame = this.timeCurrentFrame;
+	long timeComputationStart = System.currentTimeMillis();
+	//UPDATE AND DRAW
+	this.update(dt);
+	this.repaint();
+        //this.paintComponent(g);
+	//SLEEP IF NEEDED
+	try {
 	    long timeComputationEnd = System.currentTimeMillis();
 	    long timeComputationTaken = timeComputationEnd - timeComputationStart;
 	    long timeToSleep = this.timeInterval - timeComputationTaken;
-	    Thread.sleep(timeToSleep);
-	    } catch (Exception e) {
-		System.err.println("ERROR: Could not sleep main thread.");
-		e.printStackTrace();
-	    }
+	} catch (Exception e) {
+	    System.err.println("ERROR: Could not sleep main thread.");
+	    e.printStackTrace();
 	}
-	this.releaseGame();
-    }
+    } 
 
     //Game Release - Do before game closes
     public void releaseGame() {
@@ -62,14 +68,18 @@ public class PacmanGame extends JFrame {
 	currentRoom.update(dt);
     }
 
-    //DRAW LOOP
-    public void paintComponent(Graphics g) {
-	Graphics2D g2 = (Graphics2D)g;
-	currentRoom.draw(g2);
+    public class GamePanel extends JPanel {
+	public Room room;
+	//DRAW LOOP
+	public void paintComponent(Graphics g) {
+	    Graphics2D g2 = (Graphics2D)g;
+	    currentRoom.draw(g2);
+	}
     }
 
     public static void main(String[] args) {
 	PacmanGame game = new PacmanGame();
 	System.out.println(game.getTitle());
     }
+
 }
