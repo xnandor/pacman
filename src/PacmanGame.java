@@ -19,7 +19,7 @@ public class PacmanGame extends JFrame implements KeyListener {
     public long timeInterval      = 40L; //25 fps
     public Room currentRoom;
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     public PacmanGame() {
 	this.initGame();
