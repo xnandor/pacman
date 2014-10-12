@@ -15,14 +15,14 @@ public class Pacman extends GameObject implements KeyListener {
 
     public Pacman() {
 	super();
-	this.boundingBox = new Rectangle(100, 100, 8, 8);
+	this.boundingBox = new Rectangle((13*12)+8, 26*12+1, 8, 8);
     }
 
     public void update(float dt) {
 	double x = boundingBox.getX();
 	double y = boundingBox.getY();
 	elapsedChompTime += dt;
-	boundingBox.setLocation( (int)(x+velX*4), (int)(y+velY*4) );
+	boundingBox.setLocation( (int)(x+velX*2), (int)(y+velY*2) );
 	if (elapsedChompTime > 200) {
 	    elapsedChompTime = 0;
 	    if (spriteIOffset == 0) spriteIOffset = 2;
@@ -51,12 +51,8 @@ public class Pacman extends GameObject implements KeyListener {
     public void draw(Graphics2D g) {
 	double x = boundingBox.getX();
 	double y = boundingBox.getY();
-	Color color = Color.red;
-	g.setColor(color);
 	drawSprite(g, 24, spriteI+spriteIOffset,spriteJ, -7, -7);
-	if (PacmanGame.DEBUG) {
-	    g.draw(boundingBox);
-	}
+	super.draw(g);
     }
 
     public void keyPressed(KeyEvent e) {

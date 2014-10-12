@@ -19,6 +19,8 @@ public class PacmanGame extends JFrame implements KeyListener {
     public long timeInterval      = 40L; //25 fps
     public Room currentRoom;
 
+    public static final int WIDTH = 336;
+    public static final int HEIGHT= 480;
     public static final boolean DEBUG = false;
 
     public PacmanGame() {
@@ -28,9 +30,9 @@ public class PacmanGame extends JFrame implements KeyListener {
     //Game Initialization - Place something here if you only want it to happen globally when the game is started.
     public void initGame() {
 	JFrame frame = this;
-	//	8 x 8 pixel square on the screen. Pac-Man’s screen resolution is 224 x 288 (plus status area of 112), 
-	//      so this gives us a total board size of 28 x 36 tiles, 
-	frame.setMinimumSize(new Dimension(224 , 288 + 112)); //Fixed resolution - Don't change, timing and graphics rely on this resolution.
+	//	12x12 pixel square on the screen. Pac-Man’s screen resolution is 336 x 432 (plus five rows for status totaling 60), 
+	//      so this gives us a total board size of 28 x 30 tiles, 
+	frame.setMinimumSize(new Dimension(PacmanGame.WIDTH , PacmanGame.HEIGHT)); //Fixed resolution - Don't change, timing and graphics rely on this resolution.
 	frame.setTitle("Pacman");
 	g = frame.getContentPane().getGraphics();
 	frame.getContentPane().add(gamePanel);

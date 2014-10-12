@@ -1,3 +1,4 @@
+import java.awt.Color;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 import java.io.File;
@@ -11,7 +12,7 @@ public class GameObject {
     public static BufferedImage spriteMap;
     static {
 	try {
-	    spriteMap = ImageIO.read(new File("./art/images.png")); //Frames to animate
+	    spriteMap = ImageIO.read(new File("./media/spritemap-alpha.png")); //Frames to animate
 	} catch(Exception e) {
 	    e.printStackTrace();
 	}
@@ -35,7 +36,10 @@ public class GameObject {
     }
 
     public void draw(Graphics2D g) {
-
+	if (PacmanGame.DEBUG) {
+	    g.setColor(Color.red);
+	    g.draw(boundingBox);
+	}
     }
 
     public void drawSprite(Graphics2D g,int size, int i, int j) {
@@ -44,6 +48,7 @@ public class GameObject {
 	double y = boundingBox.getY();
 	g.clipRect((int)x, (int)y, size, size);
 	g.drawImage(GameObject.spriteMap, new AffineTransform(1f , 0f , 0f , 1f , x-offset-(i*size), y-offset-1-(j*size)), null);
+	g.setClip(new Rectangle(-PacmanGame.WIDTH, -PacmanGame.HEIGHT, PacmanGame.WIDTH*2, PacmanGame.HEIGHT*2));
     }
 
     public void drawSprite(Graphics2D g,int size, int i, int j, int offsetX, int offsetY) {
@@ -52,6 +57,7 @@ public class GameObject {
 	double y = boundingBox.getY();
 	g.clipRect((int)x+offsetX, (int)y+offsetY, size, size);
 	g.drawImage(GameObject.spriteMap, new AffineTransform(1f , 0f , 0f , 1f , x-offset-(i*size)+offsetX, y-offset-1-(j*size)+offsetY), null);
+	g.setClip(new Rectangle(-PacmanGame.WIDTH, -PacmanGame.HEIGHT, PacmanGame.WIDTH*2, PacmanGame.HEIGHT*2));
     }
 
 
