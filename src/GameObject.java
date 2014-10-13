@@ -9,6 +9,8 @@ import java.awt.Graphics2D;
 
 public class GameObject {
 
+    //This is a single sprite map which is available to any object in the room.
+    //The prefered way to draw from the sprite map is with the drawSprite method.
     public static BufferedImage spriteMap;
     static {
 	try {
@@ -17,7 +19,9 @@ public class GameObject {
 	    e.printStackTrace();
 	}
     }
+    //The bounding box is used for collision detection, updating and drawing.
     public Rectangle boundingBox = new Rectangle();
+    //spriteI and spriteJ are used by inherited objects to keep track of which sprite they want to draw.
     public int spriteI = 0;
     public int spriteJ= 0;
 
@@ -25,6 +29,8 @@ public class GameObject {
 
     }
 
+    //Used for collision detection.
+    //Note the polymorphic ability of a child of the GameObject.
     public boolean intersects(GameObject other) {
 	Rectangle otherRect = other.boundingBox;
 	Rectangle rect = this.boundingBox;
@@ -42,6 +48,13 @@ public class GameObject {
 	}
     }
 
+    // drawSprite
+    //    This is the easiest way to draw a sprite from the spritemap.
+    //    g - graphics context
+    //    size - the standard size desired from spritemap.
+    //           This is because a single spritemap may have various standard sizes.
+    //    i - tile column number
+    //    j - tile row number
     public void drawSprite(Graphics2D g,int size, int i, int j) {
 	int offset = 4;
 	double x = boundingBox.getX();
@@ -51,6 +64,14 @@ public class GameObject {
 	g.setClip(new Rectangle(-PacmanGame.WIDTH, -PacmanGame.HEIGHT, PacmanGame.WIDTH*2, PacmanGame.HEIGHT*2));
     }
 
+    // drawSprite
+    //    This is the easiest way to draw a sprite from the spritemap.
+    //    g - graphics context
+    //    size - the standard size desired from spritemap.
+    //           This is because a single spritemap may have various standard sizes.
+    //    i - tile column number
+    //    j - tile row number
+    //    offsetX (or Y) - Relative offset to draw in pixels from bounding box.
     public void drawSprite(Graphics2D g,int size, int i, int j, int offsetX, int offsetY) {
 	int offset = 4;
 	double x = boundingBox.getX();

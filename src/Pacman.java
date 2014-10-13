@@ -9,11 +9,16 @@ public class Pacman extends GameObject implements KeyListener {
 
     Room room;
     double totalTime = 0;
+    //time since last chomp
     double elapsedChompTime = 0;
+    int chompPhase = -1;
+    int spriteOffset = 0;
+    //time since last desired direction change
     double elapsedDirectionTime = 0;
-    int spriteIOffset = 0;
+    //Velocities
     int velX = 0;
     int velY = 0;
+    //Desired velocity is used to make sure pacman still turns if key is pressed early.
     int desiredVelX = 0;
     int desiredVelY = 0;
     boolean moving = false;
@@ -25,6 +30,7 @@ public class Pacman extends GameObject implements KeyListener {
     }
 
     public void update(float dt) {
+	int speed = 4;
 	double x = boundingBox.getX();
 	double y = boundingBox.getY();
 	elapsedChompTime += dt;
@@ -32,18 +38,18 @@ public class Pacman extends GameObject implements KeyListener {
 	//Move to next location
 	Rectangle nextLocation = new Rectangle(boundingBox);
 	Rectangle nextDesiredLocation = new Rectangle(boundingBox);
-	nextLocation.setLocation( (int)(x+velX*2), (int)(y+velY*2) );
-	nextDesiredLocation.setLocation( (int)(x+desiredVelX*2), (int)(y+desiredVelY*2) );
+	nextLocation.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
+	nextDesiredLocation.setLocation( (int)(x+desiredVelX*speed), (int)(y+desiredVelY*speed) );
 	if (room.isLocationFree(nextDesiredLocation)) {
 	    elapsedDirectionTime = 0;
 	    moving = true;
 	    velX = desiredVelX;
 	    velY = desiredVelY;
-	    boundingBox.setLocation( (int)(x+velX*2), (int)(y+velY*2) );
+	    boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
 	} else if(room.isLocationFree(nextLocation)) {
 	    moving = true;
 	    elapsedDirectionTime = 0;
-	    boundingBox.setLocation( (int)(x+velX*2), (int)(y+velY*2) );
+	    boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
 	} else {
 	    moving = false;
 	}
@@ -60,39 +66,55 @@ public class Pacman extends GameObject implements KeyListener {
 	    desiredVelX = velX;
 	    desiredVelY = velY;
 	}
-	//Animate chomp
-	if (elapsedChompTime > 200 && moving) {
-	    elapsedChompTime = 0;
-	    if (spriteIOffset == 0) spriteIOffset = 2;
-	    else spriteIOffset = 0;
-	} else if (!moving) {
-	    spriteIOffset = 2;
+	//Animate Direction
+	if (chompPhase%3 != 2) {
+	    if ((Math.abs(velX) > Math.abs(velY))) { //Going left or right
+		if (velX > 0) {  //Right
+		    spriteI = 12;
+		    spriteJ= 7;
+		} else {  //Left
+		    spriteI = 0;
+		    spriteJ= 11;
+		}
+	    } else {        //Going up or down
+		if (velY > 0) {  //Down
+		    spriteI = 13;
+		    spriteJ= 7;
+		} else {  //Up
+		    spriteI = 1;
+		    spriteJ= 11;
+		}
+	    }
 	}
-	//Animate direction
-	if (Math.abs(velX) > Math.abs(velY)) { //Going left or right
-	    if (velX > 0) {  //Right
-		spriteI = 12; spriteJ= 7;
-	    } else {  //Left
-		spriteI = 0; spriteJ= 11;
+	//Animate Chomp
+	if (elapsedChompTime > 50 && moving) {
+	    elapsedChompTime = 0;
+	    chompPhase++;
+	    if (chompPhase%3 == 0) {
+		spriteOffset=0;
 	    }
-	} else {        //Going up or down
-	    if (velY > 0) {  //Down
-		spriteI = 13; spriteJ= 7;		
-	    } else {  //Up
-		spriteI = 1; spriteJ= 11;			
+	    if (chompPhase%3 == 1) {
+		spriteOffset=2;
 	    }
+	    if (chompPhase%3 == 2) {
+		spriteOffset=0;
+		spriteI = 0;
+		spriteJ = 8;
+	    }
+	} else if (!moving) {
+	   
 	}
 	if (velX == 0 && velY == 0) {
-	    spriteI = 0;
-	    spriteJ = 8;
-	    spriteIOffset = 0;
+	    spriteOffset = 0;
+	    spriteI = 0; spriteJ = 8;
 	}
+
     }
 
     public void draw(Graphics2D g) {
 	double x = boundingBox.getX();
 	double y = boundingBox.getY();
-	drawSprite(g, 24, spriteI+spriteIOffset,spriteJ, -5, -5);
+	drawSprite(g, 24, spriteI+spriteOffset,spriteJ, -5, -5);
 	super.draw(g);
     }
 

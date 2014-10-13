@@ -19,6 +19,7 @@ public class Room implements KeyListener {
 
     public Room(int level) {
     	pacman = new Pacman(this);
+	//Block sprite theme information located in Block object)
 	int[] board1 = {
 	    2, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 45, 44, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,  1,
 	    4,100,100,100,100,100,100,100,100,100,100,100,100, 27, 26,100,100,100,100,100,100,100,100,100,100,100,100,  3,
@@ -77,7 +78,6 @@ public class Room implements KeyListener {
 		dots.remove(i);
 	    }
 	}
-
 	//DEBUG
 	if (PacmanGame.DEBUG) {
 	    y = (int)(100*Math.sin((double)this.frame/10)) + 200;
@@ -89,7 +89,6 @@ public class Room implements KeyListener {
 	//Draw Background
 	g.setColor(Color.black);
 	g.fillRect(0 , 0 , 336 , 492);
-
 	//Draw Blocks
 	for (int i = 0; i < blocks.size(); i++) {
 	    Block block = blocks.get(i);
@@ -100,23 +99,16 @@ public class Room implements KeyListener {
 	    Dot dot = dots.get(i);
 	    dot.draw(g);
 	}
-
 	//DEBUG
 	if (PacmanGame.DEBUG) {
 	    g.setColor(Color.white); //DEMO...DELETE LATER
 	    g.drawLine(0, y, PacmanGame.WIDTH, y); //DEMO...DELETE LATER
 	}
-
 	pacman.draw(g);
-
     }
 
     public void keyPressed(KeyEvent e) {
 	pacman.keyPressed(e);
-	for (int i = 0; i < blocks.size(); i++) {
-	    Block block = blocks.get(i);
-	    block.keyPressed(e);
-	}
     }
 
     public void keyReleased(KeyEvent e) {
