@@ -2,9 +2,9 @@
 files=""
 for file in `ls ./src`; do
     if [[ $file =~ Test ]]; then
-	: #NO-OP
+        : #NO-OP
     else
-	files=$files" ./src/"$file
+        files=$files" ./src/"$file
     fi
 done
 javac -d ./bin $files

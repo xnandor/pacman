@@ -72,7 +72,7 @@ public class GameObject {
     //    i - tile column number
     //    j - tile row number
     //    offsetX (or Y) - Relative offset to draw in pixels from bounding box.
-    public void drawSprite(Graphics2D g,int size, int i, int j, int offsetX, int offsetY) {
+    public void drawSprite(Graphics2D g, int size, int i, int j, int offsetX, int offsetY) {
 	int offset = 4;
 	double x = boundingBox.getX();
 	double y = boundingBox.getY();
