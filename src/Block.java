@@ -45,21 +45,21 @@ public class Block extends GameObject {
     // 100 - dot
     // 101 - super dot
     public Block(int blockNumber, int gridX, int gridY) {
-	super();
-	blockNumber--;
-	if (blockNumber < 16) {
-	    spriteI = 16+blockNumber;
-	    spriteJ = 6;
-	} else {
-	    spriteI = blockNumber - 17;
-	    spriteJ = 7;
-	}
-	this.boundingBox = new Rectangle(12*gridX, 12*gridY, 12, 12);
+        super();
+        blockNumber--;
+        if (blockNumber < 16) {
+            spriteI = 16+blockNumber;
+            spriteJ = 6;
+        } else {
+            spriteI = blockNumber - 17;
+            spriteJ = 7;
+        }
+        this.boundingBox = new Rectangle(12*gridX, 12*gridY, 12, 12);
     }
 
     public void draw(Graphics2D g) {
-	drawSprite(g, 12, spriteI, spriteJ);
-	super.draw(g);
+        drawSprite(g, 12, spriteI, spriteJ);
+        super.draw(g);
     }
 }
 

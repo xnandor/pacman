@@ -12,7 +12,9 @@ public class Menu extends GameObject implements KeyListener {
     int y = 0;
     boolean GameStart = false;
 
-    public Menu(){}
+    public Menu(){
+
+    }
 
     public void draw(Graphics2D g) {
         //Draw Background
