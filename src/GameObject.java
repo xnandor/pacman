@@ -13,11 +13,11 @@ public class GameObject {
     //The prefered way to draw from the sprite map is with the drawSprite method.
     public static BufferedImage spriteMap;
     static {
-	try {
-	    spriteMap = ImageIO.read(new File("./media/spritemap-alpha.png")); //Frames to animate
-	} catch(Exception e) {
-	    e.printStackTrace();
-	}
+	    try {
+	        spriteMap = ImageIO.read(new File("./media/spritemap-alpha.png")); //Frames to animate
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    }
     }
     //The bounding box is used for collision detection, updating and drawing.
     public Rectangle boundingBox = new Rectangle();
@@ -32,8 +32,8 @@ public class GameObject {
     //Used for collision detection.
     //Note the polymorphic ability of a child of the GameObject.
     public boolean intersects(GameObject other) {
-	Rectangle otherRect = other.boundingBox;
-	Rectangle rect = this.boundingBox;
+	    Rectangle otherRect = other.boundingBox;
+	    Rectangle rect = this.boundingBox;
     	return rect.intersects(otherRect);
     }
 
@@ -42,10 +42,10 @@ public class GameObject {
     }
 
     public void draw(Graphics2D g) {
-	if (PacmanGame.DEBUG) {
-	    g.setColor(Color.red);
-	    g.draw(boundingBox);
-	}
+	    if (PacmanGame.DEBUG) {
+	        g.setColor(Color.red);
+	        g.draw(boundingBox);
+	    }
     }
 
     // drawSprite
@@ -56,12 +56,12 @@ public class GameObject {
     //    i - tile column number
     //    j - tile row number
     public void drawSprite(Graphics2D g,int size, int i, int j) {
-	int offset = 4;
-	double x = boundingBox.getX();
-	double y = boundingBox.getY();
-	g.clipRect((int)x, (int)y, size, size);
-	g.drawImage(GameObject.spriteMap, new AffineTransform(1f , 0f , 0f , 1f , x-offset-(i*size), y-offset-1-(j*size)), null);
-	g.setClip(new Rectangle(-PacmanGame.WIDTH, -PacmanGame.HEIGHT, PacmanGame.WIDTH*2, PacmanGame.HEIGHT*2));
+	    int offset = 4;
+	    double x = boundingBox.getX();
+	    double y = boundingBox.getY();
+	    g.clipRect((int)x, (int)y, size, size);
+	    g.drawImage(GameObject.spriteMap, new AffineTransform(1f , 0f , 0f , 1f , x-offset-(i*size), y-offset-1-(j*size)), null);
+	    g.setClip(new Rectangle(-PacmanGame.WIDTH, -PacmanGame.HEIGHT, PacmanGame.WIDTH*2, PacmanGame.HEIGHT*2));
     }
 
     // drawSprite
