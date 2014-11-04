@@ -9,6 +9,7 @@ public class Room implements KeyListener {
 
     ArrayList<GameObject> scene = new ArrayList<GameObject>();
     Pacman pacman;
+    ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     ArrayList<Block> blocks = new ArrayList<Block>();
     ArrayList<Dot> dots = new ArrayList<Dot>();
     int[] board = {};
@@ -19,6 +20,10 @@ public class Room implements KeyListener {
 
     public Room(int level) {
         pacman = new Pacman(this);
+        ghosts.add(new Ghost(this,"red"));
+        ghosts.add(new Ghost(this,"pink"));
+        ghosts.add(new Ghost(this,"blue"));
+        ghosts.add(new Ghost(this,"orange"));
         //Block sprite theme information located in Block object)
         int[] board1 = {
             2, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 45, 44, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,  1,
@@ -33,7 +38,7 @@ public class Room implements KeyListener {
             6, 13, 13, 13, 13, 40,100, 27, 38, 15, 15, 40,  0, 27, 26,  0, 41, 15, 15, 39, 26,100, 41, 13, 13, 13, 13,  5,
             0,  0,  0,  0,  0,  4,100, 27, 36, 22, 22, 42,  0, 43, 42,  0, 43, 22, 22, 37, 26,100,  3,  0,  0,  0,  0,  0,
             0,  0,  0,  0,  0,  4,100, 27, 26,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 27, 26,100,  3,  0,  0,  0,  0,  0,
-            0,  0,  0,  0,  0,  4,100, 27, 26,  0, 31, 13, 35, -1, -1, 34, 13, 30,  0, 27, 26,100,  3,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,  0,  4,100, 27, 26,  0, 31, 13, 35,  0,  0, 34, 13, 30,  0, 27, 26,100,  3,  0,  0,  0,  0,  0,
             12, 12, 12, 12, 12, 42,100, 43, 42,  0,  3,  0,  0,  0,  0,  0,  0,  4,  0, 43, 42,100, 43, 12, 12, 12, 12, 12,
             0,  0,  0,  0,  0,  0,100,  0,  0,  0,  3,  0,  0,  0,  0,  0,  0,  4,  0,  0,  0,100,  0,  0,  0,  0,  0,  0,
             13, 13, 13, 13, 13, 40,100, 41, 40,  0,  3,  0,  0,  0,  0,  0,  0,  4,  0, 41, 40,100, 41, 13, 13, 13, 13, 13,
@@ -69,6 +74,9 @@ public class Room implements KeyListener {
 
     public void update(float dt) {
         pacman.update(dt);
+        for (int i = 0; i < ghosts.size(); i++) {
+            ghosts.get(i).update(dt);
+        }
         //CHECK FOR EATS
         Rectangle pacmanRect = pacman.boundingBox;
         for (int i = 0; i < dots.size(); i++) { //eat dots
@@ -79,6 +87,16 @@ public class Room implements KeyListener {
                 score = score + 10;
             }
         }
+        
+        Rectangle pacmanRectGhost = pacman.boundingBox;
+        for (int i = 0; i < ghosts.size(); i++) { //eat dots
+            Ghost ghost = ghosts.get(i);
+            if (pacmanRectGhost.intersects(ghost.boundingBox)) {
+                pacman.die();
+                numLives--;
+            }
+        }
+        
         //DEBUG
         if (PacmanGame.DEBUG) {
             y = (int)(100*Math.sin((double)this.frame/10)) + 200;
@@ -399,6 +417,9 @@ public class Room implements KeyListener {
             g.drawLine(0, y, PacmanGame.WIDTH, y); //DEMO...DELETE LATER
         }
         pacman.draw(g);
+        for (int i = 0; i < ghosts.size(); i++) {
+            ghosts.get(i).draw(g);
+        }
     }
 
     public void death (){

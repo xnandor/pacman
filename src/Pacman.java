@@ -8,6 +8,7 @@ import java.awt.geom.AffineTransform;
 public class Pacman extends GameObject implements KeyListener {
 
     Room room;
+    int lives = 3;
     double totalTime = 0;
     //time since last chomp
     double elapsedChompTime = 0;
@@ -116,6 +117,14 @@ public class Pacman extends GameObject implements KeyListener {
         double y = boundingBox.getY();
         drawSprite(g, 24, spriteI+spriteOffset,spriteJ, -5, -5);
         super.draw(g);
+    }
+    
+    public void die() {
+        int velX = 0;
+        int velY = 0;
+        int desiredVelX = 0;
+        int desiredVelY = 0;
+        this.boundingBox = new Rectangle((13*12)+8, 26*12+1, 11, 11);
     }
 
     public void keyPressed(KeyEvent e) {
