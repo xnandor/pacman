@@ -89,6 +89,9 @@ public class PacmanGame extends JFrame implements KeyListener {
                 running = false;
             }
         }
+        //Final frame update to endure game over is shown
+        this.update(dt);
+        this.repaint();
         long test = System.currentTimeMillis();
         while (System.currentTimeMillis() < test + 1500){
             //do nothing
