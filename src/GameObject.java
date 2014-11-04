@@ -14,7 +14,7 @@ public class GameObject {
     public static BufferedImage spriteMap;
     static {
         try {
-            spriteMap = ImageIO.read(new File("C:/Users/Jared Griffith/Documents/Github/pacman/media/spritemap-alpha.png")); //Frames to animate
+            spriteMap = ImageIO.read(new File("./media/spritemap-alpha.png")); //Frames to animate
         } catch(Exception e) {
             e.printStackTrace();
         }
