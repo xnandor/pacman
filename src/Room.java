@@ -100,19 +100,44 @@ public class Room implements KeyListener {
             dot.draw(g);
         }
         //draw lives on board
-        int[] word = {12,9,22,5,19};
-        Word LivesDrawWord = new Word(word,265,415);
+        int[] wordI = {12,9,22,5,19};
+        int[] wordJ = {2,2,2,2,2};
+        Symbols LivesDrawWord = new Symbols(12,wordI,wordJ,265,415);
         LivesDrawWord.draw(g);
         //draw numLives on board
-        int[] num = {numLives};
-        Number LivesDrawNum = new Number(num,289,430);
-        LivesDrawNum.draw(g);
+        if(numLives == 3){
+            int[] numI = {2,2,2};
+            int[] numJ = {11,11,11};
+            Symbols LivesDrawNum = new Symbols(24,numI,numJ,262,430);
+            LivesDrawNum.draw(g);
+        }
+        else if(numLives == 2){
+            int[] numI = {2,2};
+            int[] numJ = {11,11};
+            Symbols LivesDrawNum = new Symbols(24,numI,numJ,262,430);
+            LivesDrawNum.draw(g);
+        }
+        else if(numLives == 1){
+            int[] numI = {2};
+            int[] numJ = {11};
+            Symbols LivesDrawNum = new Symbols(24,numI,numJ,262,430);
+            LivesDrawNum.draw(g);
+        }
+        else {
+            int[] numI = {11};
+            int[] numJ = {11};
+            Symbols LivesDrawNum = new Symbols(24,numI,numJ,262,430);
+            LivesDrawNum.draw(g);
+        }
+        //draws Game Over on the board.
         if(numLives <= 0){
-            int[] word1 = {7,1,13,5};
-            Word Game = new Word(word1,105,240);
+            int[] word1I = {7,1,13,5};
+            int[] word1J = {2,2,2,2};
+            Symbols Game = new Symbols(12,word1I,word1J,105,240);
             Game.draw(g);
-            int[] word2 = {15,22,5,18};
-            Word Over = new Word(word2,180,240);
+            int[] word2I = {15,22,5,18};
+            int[] word2J = {2,2,2,2};
+            Symbols Over = new Symbols(12,word2I,word2J,180,240);
             Over.draw(g);
         }
         //DEBUG

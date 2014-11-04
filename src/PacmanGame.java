@@ -11,8 +11,10 @@ public class PacmanGame extends JFrame implements KeyListener {
 
     GamePanel gamePanel = new GamePanel();
     MenuPanel MP;
+    Splash LS;
     public Graphics g;
     public boolean running;
+    public boolean dead = false;
     public long dt = 0L;
     public long timePreviousFrame = System.currentTimeMillis();
     public long timeCurrentFrame  = System.currentTimeMillis();
@@ -20,7 +22,9 @@ public class PacmanGame extends JFrame implements KeyListener {
     public long timeInterval      = 40L; //25 fps
     public Room currentRoom;
     public Menu currMenu;
-    boolean start;
+    public LevelSplash currSplash;
+    public boolean start;
+    public int level = 1;
 
     public static final int WIDTH = 336;
     public static final int HEIGHT= 480;
@@ -35,6 +39,8 @@ public class PacmanGame extends JFrame implements KeyListener {
 
         running = true;
         start = true;
+        dead = false;
+        level =1;
         MP = new MenuPanel();
         JFrame menu = this;
         menu.setMinimumSize(new Dimension(PacmanGame.WIDTH, PacmanGame.HEIGHT));
@@ -65,6 +71,7 @@ public class PacmanGame extends JFrame implements KeyListener {
         while (start){
             menuLoop();
         }
+        menu.getContentPane().remove(MP);
         initGame();
     }
 
@@ -76,9 +83,8 @@ public class PacmanGame extends JFrame implements KeyListener {
         frame.setMinimumSize(new Dimension(PacmanGame.WIDTH , PacmanGame.HEIGHT)); //Fixed resolution - Don't change, timing and graphics rely on this resolution.
         frame.setTitle("Pacman");
         g = frame.getContentPane().getGraphics();
-        frame.getContentPane().remove(MP);
         frame.getContentPane().add(gamePanel);
-        currentRoom = new Room(1); //Start at level one
+        currentRoom = new Room(level); //Start at level one
         gamePanel.room = currentRoom;
         frame.addKeyListener(currentRoom);
         frame.pack();
@@ -87,14 +93,50 @@ public class PacmanGame extends JFrame implements KeyListener {
             gameLoop();
             if (currentRoom.numLives <= 0){
                 running = false;
+                dead = true;
+            }
+            else if(currentRoom.dots.isEmpty()){
+                level++;
+                running = false;
             }
         }
+        //Final frame update to endure game over is shown
+        if(dead) {
+            this.update(dt);
+            this.repaint();
+            long test = System.currentTimeMillis();
+            while (System.currentTimeMillis() < test + 1500) {
+                //do nothing
+            }
+            frame.getContentPane().remove(gamePanel);
+            menuInit();
+        }
+        else{
+            frame.getContentPane().remove(gamePanel);
+            levelSplash();
+        }
+    }
+
+    private void levelSplash() {
+        //create and draw Level Splash Screen
+        running = true;
+        LS = new Splash();
+        JFrame ls = this;
+        ls.setMinimumSize(new Dimension(PacmanGame.WIDTH, PacmanGame.HEIGHT)); //Fixed resolution - Don't change, timing and graphics rely on this resolution.
+        ls.setTitle("Pacman");
+        g = ls.getContentPane().getGraphics();
+        ls.getContentPane().add(LS);
+        currSplash = new LevelSplash(level);
+        LS.Spl = currSplash;
+        ls.pack();
+        ls.setVisible(true);
+        //allow message to be displayed shortly
         long test = System.currentTimeMillis();
-        while (System.currentTimeMillis() < test + 1500){
+        while (System.currentTimeMillis() < test + 5000) {
             //do nothing
         }
-        frame.getContentPane().remove(gamePanel);
-        menuInit();
+        ls.getContentPane().remove(LS);
+        initGame();
     }
 
     public void menuLoop() {
@@ -179,6 +221,14 @@ public class PacmanGame extends JFrame implements KeyListener {
         public void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D)g;
             menu.draw(g2);
+        }
+    }
+
+    public class Splash extends JPanel {
+        public LevelSplash Spl;
+        public void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D)g;
+            Spl.draw(g2);
         }
     }
 
