@@ -69,7 +69,6 @@ public class Room implements KeyListener {
 
     public void update(float dt) {
         pacman.update(dt);
-
         //CHECK FOR EATS
         Rectangle pacmanRect = pacman.boundingBox;
         for (int i = 0; i < dots.size(); i++) { //eat dots
@@ -153,7 +152,7 @@ public class Room implements KeyListener {
         String str = Integer.toString(score);
         int strLength = str.length();
         int[] intArray = new int[str.length()];
-        for(int i=0; i < str.length(); i++){
+        for(int i=0; i < str.length(); i++) {
             intArray[i] = str.charAt(i) - '0';
         }
         //For the length of the score string
