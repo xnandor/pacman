@@ -40,6 +40,7 @@ public class PacmanGame extends JFrame implements KeyListener {
         running = true;
         start = true;
         dead = false;
+        level =1;
         MP = new MenuPanel();
         JFrame menu = this;
         menu.setMinimumSize(new Dimension(PacmanGame.WIDTH, PacmanGame.HEIGHT));
