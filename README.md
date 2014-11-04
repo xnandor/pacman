@@ -3,6 +3,18 @@ pacman
 
 Pacman Clone
 
+#RUNNING INSTRUCTIONS
+
+There is executable file called "run" in the project's root directory.
+This will automatically compile and run the program in an unix like environment.
+This project requires:
+
+1. The Java 7 JDK including the virtual machine.
+
+2. Bash.
+
+3. Unix environment.
+
 #Notice
 
 Please read before contributing.
