@@ -129,7 +129,7 @@ public class Room implements KeyListener {
             Symbols LivesDrawNum = new Symbols(24,numI,numJ,262,430);
             LivesDrawNum.draw(g);
         }
-
+        //draws Game Over on the board.
         if(numLives <= 0){
             int[] word1I = {7,1,13,5};
             int[] word1J = {2,2,2,2};
