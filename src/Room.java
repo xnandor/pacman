@@ -143,9 +143,10 @@ public class Room implements KeyListener {
             Over.draw(g);
         }
         //draws the word score on board
-        int[] scorew = {19,3,15,18,5};
-        Word ScoreWord = new Word(scorew, 100, 2);
-        ScoreWord.draw(g);
+        int[] scorei = {19,3,15,18,5};
+        int[] scorej = {2,2,2,2,2};
+        Symbols ScoreSymbols = new Symbols(12, scorei, scorej, 100, 2);
+        ScoreSymbols.draw(g);
         //Converts the int score to a string
         //The array is then converted into an
         //array of integers
@@ -166,28 +167,28 @@ public class Room implements KeyListener {
                 //) then draw the first element of the array
                 if(k==0){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,100,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
                     ScoreDraw.draw(g);
                 }
                 //If k is equivalent to 1(2nd position of the score)
                 //then draw the second element of the array
                 if(k==1){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,120,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
                     ScoreDraw.draw(g);
                 }
                 //If k is equivalent to 2(3rd position of the score)
                 //then draw the third element of the array
                 if(k==2){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,140,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
                     ScoreDraw.draw(g);
                 }
                 //If k is equivalent to 3(4th position of the score)
                 //then draw the fourth element of the array
                 if(k==3){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,160,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
                     ScoreDraw.draw(g);
                 }
                 break;
@@ -195,198 +196,198 @@ public class Room implements KeyListener {
             case 1:
                 if(k==0){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,100,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==1){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,120,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==2){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,140,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==3){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,160,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
                     ScoreDraw.draw(g);
                 }
                 break;
             case 2:
                 if(k==0){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,100,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==1){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,120,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==2){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,140,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==3){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,160,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
                     ScoreDraw.draw(g);
                 }
                 break;
             case 3:
                 if(k==0){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,100,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==1){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,120,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==2){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,140,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==3){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,160,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
                     ScoreDraw.draw(g);
                 }
                 break;
             case 4:
                 if(k==0){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,100,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==1){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,120,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==2){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,140,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==3){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,160,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
                     ScoreDraw.draw(g);
                 }
                 break;
             case 5:
                 if(k==0){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,100,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==1){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,120,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==2){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,140,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==3){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,160,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
                     ScoreDraw.draw(g);
                 }
                 break;
             case 6:
                 if(k==0){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,100,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==1){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,120,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==2){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,140,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==3){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,160,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
                     ScoreDraw.draw(g);
                 }
                 break;
             case 7:
                 if(k==0){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,100,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==1){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,120,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==2){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,140,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==3){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,160,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
                     ScoreDraw.draw(g);
                 }
                 break;
             case 8:
                 if(k==0){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,100,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==1){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,120,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==2){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,140,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==3){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,160,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
                     ScoreDraw.draw(g);
                 }
                 break;
             case 9:
                 if(k==0){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,100,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==1){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,120,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==2){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,140,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
                     ScoreDraw.draw(g);
                 }
                 if(k==3){
                     int[] scoreNum = {intArray[k]};
-                    Number ScoreDraw = new Number(scoreNum,160,20);
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
                     ScoreDraw.draw(g);
                 }
                 break;

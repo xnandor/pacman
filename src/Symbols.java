@@ -11,7 +11,21 @@ public class Symbols extends GameObject {
     int yOFF;
     int Size;
 
-    public Symbols(int size, int[] strI, int[] strJ, int x, int y){
+    //Constructor for numbers only
+    public Symbols(int[] strI, int x, int y) {
+        symbolI = strI;
+        symbolJ = new int[symbolI.length];
+        System.arraycopy(symbolI , 0 , symbolJ , 0 , symbolI.length);
+        for (int i = 0; i < symbolJ.length; i++) {
+            symbolJ[i] = 1;
+        }
+        symbolJ[0] = 0;
+        xOFF = x;
+        yOFF = y;
+        Size = 12;
+    }
+
+    public Symbols(int size, int[] strI, int[] strJ, int x, int y) {
         symbolI = strI;
         symbolJ = strJ;
         xOFF = x;
@@ -19,11 +33,10 @@ public class Symbols extends GameObject {
         Size = size;
     }
 
-    public void draw(Graphics2D g){
+    public void draw(Graphics2D g) {
         for(int i = 0; i< symbolI.length; i++){
             drawSprite(g,Size,symbolI[i],symbolJ[i],xOFF,yOFF);
             xOFF = xOFF + Size;
         }
     }
-
 }
