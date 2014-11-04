@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir bin/ 2> /dev/null
 files=""
 for file in `ls ./src`; do
     if [[ $file =~ Test ]]; then

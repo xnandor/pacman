@@ -13,7 +13,7 @@ public class Room implements KeyListener {
     ArrayList<Dot> dots = new ArrayList<Dot>();
     int[] board = {};
     int numLives = 3;
-    long score = 0L;
+    int score = 0;
     int y = 0; //for debug
     int frame = 0; //for debug
 
@@ -76,6 +76,8 @@ public class Room implements KeyListener {
             Dot dot = dots.get(i);
             if (pacmanRect.intersects(dot.boundingBox)) {
                 dots.remove(i);
+                //increments score by 10
+                score = score + 10;
             }
         }
         //DEBUG
@@ -139,6 +141,258 @@ public class Room implements KeyListener {
             int[] word2J = {2,2,2,2};
             Symbols Over = new Symbols(12,word2I,word2J,180,240);
             Over.draw(g);
+        }
+        //draws the word score on board
+        int[] scorei = {19,3,15,18,5};
+        int[] scorej = {2,2,2,2,2};
+        Symbols ScoreSymbols = new Symbols(12, scorei, scorej, 100, 2);
+        ScoreSymbols.draw(g);
+        //Converts the int score to a string
+        //The array is then converted into an
+        //array of integers
+        String str = Integer.toString(score);
+        int strLength = str.length();
+        int[] intArray = new int[str.length()];
+        for(int i=0; i < str.length(); i++){
+            intArray[i] = str.charAt(i) - '0';
+        }
+        //For the length of the score string
+        for(int k=0; k<strLength; k++){
+            //Run this switch statement against the k
+            //element in the integer array
+            switch (intArray[k]){
+                //If the case is zero(if intArray[k] = 0) fall into this statement
+            case 0:
+                //If k is equivalent to 0 (1st position of the score
+                //) then draw the first element of the array
+                if(k==0){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
+                    ScoreDraw.draw(g);
+                }
+                //If k is equivalent to 1(2nd position of the score)
+                //then draw the second element of the array
+                if(k==1){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
+                    ScoreDraw.draw(g);
+                }
+                //If k is equivalent to 2(3rd position of the score)
+                //then draw the third element of the array
+                if(k==2){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
+                    ScoreDraw.draw(g);
+                }
+                //If k is equivalent to 3(4th position of the score)
+                //then draw the fourth element of the array
+                if(k==3){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
+                    ScoreDraw.draw(g);
+                }
+                break;
+                //Each successive case works the same as the one above
+            case 1:
+                if(k==0){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==1){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==2){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==3){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
+                    ScoreDraw.draw(g);
+                }
+                break;
+            case 2:
+                if(k==0){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==1){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==2){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==3){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
+                    ScoreDraw.draw(g);
+                }
+                break;
+            case 3:
+                if(k==0){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==1){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==2){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==3){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
+                    ScoreDraw.draw(g);
+                }
+                break;
+            case 4:
+                if(k==0){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==1){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==2){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==3){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
+                    ScoreDraw.draw(g);
+                }
+                break;
+            case 5:
+                if(k==0){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==1){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==2){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==3){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
+                    ScoreDraw.draw(g);
+                }
+                break;
+            case 6:
+                if(k==0){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==1){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==2){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==3){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
+                    ScoreDraw.draw(g);
+                }
+                break;
+            case 7:
+                if(k==0){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==1){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==2){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==3){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
+                    ScoreDraw.draw(g);
+                }
+                break;
+            case 8:
+                if(k==0){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==1){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==2){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==3){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
+                    ScoreDraw.draw(g);
+                }
+                break;
+            case 9:
+                if(k==0){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,100,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==1){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,120,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==2){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,140,20);
+                    ScoreDraw.draw(g);
+                }
+                if(k==3){
+                    int[] scoreNum = {intArray[k]};
+                    Symbols ScoreDraw = new Symbols(scoreNum,160,20);
+                    ScoreDraw.draw(g);
+                }
+                break;
+            default:
+            }
         }
         //DEBUG
         if (PacmanGame.DEBUG) {
