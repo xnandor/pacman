@@ -158,6 +158,8 @@ public class Pacman extends GameObject implements KeyListener {
         //suicide switch for testing live tracking
         if (e.VK_DELETE == code){
             room.numLives--;
+            AudioPlayer.stopAll();
+            AudioPlayer.DEATH.play();
         }
     }
 
