@@ -15,6 +15,7 @@ public class PacmanGame extends JFrame implements KeyListener {
     public Graphics g;
     public boolean running;
     public boolean dead = false;
+    public boolean paused = false;
     public long dt = 0L;
     public long timePreviousFrame = System.currentTimeMillis();
     public long timeCurrentFrame  = System.currentTimeMillis();
@@ -36,7 +37,8 @@ public class PacmanGame extends JFrame implements KeyListener {
 
     //Start Screen before initialization
     public void menuInit() {
-
+        AudioPlayer.init();
+        AudioPlayer.BEGINNING.play();
         running = true;
         start = true;
         dead = false;
@@ -54,13 +56,11 @@ public class PacmanGame extends JFrame implements KeyListener {
                 public void keyTyped(KeyEvent keyEvent) {
 
                 }
-
                 @Override
                 public void keyPressed(KeyEvent e) {
                     int code = e.getKeyCode();
                     if(KeyEvent.VK_ENTER == code) start = false;
                 }
-
                 @Override
                 public void keyReleased(KeyEvent keyEvent) {
 
@@ -86,6 +86,7 @@ public class PacmanGame extends JFrame implements KeyListener {
         frame.getContentPane().add(gamePanel);
         currentRoom = new Room(level); //Start at level one
         gamePanel.room = currentRoom;
+        frame.addKeyListener(this);
         frame.addKeyListener(currentRoom);
         frame.pack();
         frame.setVisible(true);
@@ -100,8 +101,8 @@ public class PacmanGame extends JFrame implements KeyListener {
                 running = false;
             }
         }
-        //Final frame update to endure game over is shown
-        if(dead) {
+        //Final frame update to ensure game over is shown
+        if (dead) {
             this.update(dt);
             this.repaint();
             long test = System.currentTimeMillis();
@@ -130,6 +131,8 @@ public class PacmanGame extends JFrame implements KeyListener {
         LS.Spl = currSplash;
         ls.pack();
         ls.setVisible(true);
+        AudioPlayer.stopAll();
+        AudioPlayer.INTERMISSION.play();
         //allow message to be displayed shortly
         long test = System.currentTimeMillis();
         while (System.currentTimeMillis() < test + 5000) {
@@ -167,7 +170,7 @@ public class PacmanGame extends JFrame implements KeyListener {
         this.timePreviousFrame = this.timeCurrentFrame;
         long timeComputationStart = System.currentTimeMillis();
         //UPDATE AND DRAW
-        this.update(dt);
+        if (!paused) this.update(dt);
         this.repaint();
         //this.paintComponent(g);
         //SLEEP IF NEEDED
@@ -199,7 +202,16 @@ public class PacmanGame extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            if (paused) {
+                paused = false;
+                currentRoom.paused = false;
+            }
+            else if (!paused) {
+                paused = true;
+                currentRoom.paused = true;
+            }
+        }
     }
 
     @Override
