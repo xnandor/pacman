@@ -17,12 +17,14 @@ public class Room implements KeyListener {
     int[] board = {};
     int numLives;
     int score;
+    int highscore;
     int y = 0; //for debug
     int frame = 0; //for debug
 
-    public Room(int level, int prevscore, int lives) {
+    public Room(int level, int prevscore, int lives, int HS) {
         score = prevscore;
         numLives = lives;
+        highscore = HS;
         pacman = new Pacman(this);
         ghosts.add(new Ghost(this,"red"));
         ghosts.add(new Ghost(this,"pink"));
@@ -153,6 +155,14 @@ public class Room implements KeyListener {
         }
         Symbols scoreNumberSymbols = new Symbols(scoreString, 2, 16);
         scoreNumberSymbols.draw(g);
+        //Draw HighScore
+        String HSstr = Integer.toString(highscore);
+        if (highscore == 0) {
+            HSstr = "00";
+        }
+        Symbols scoreNumberSymbols2 = new Symbols(HSstr, 336, 16);
+        scoreNumberSymbols2.alignment = Symbols.Alignment.RIGHT_JUSTIFIED;
+        scoreNumberSymbols2.draw(g);
         //Draw pause
         if (paused) {
             Symbols pauseSymbols = new Symbols("paused", 130, 20);
