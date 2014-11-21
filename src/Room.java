@@ -13,12 +13,14 @@ public class Room implements KeyListener {
     ArrayList<Block> blocks = new ArrayList<Block>();
     ArrayList<Dot> dots = new ArrayList<Dot>();
     int[] board = {};
-    int numLives = 3;
-    int score = 0;
+    int numLives;
+    int score;
     int y = 0; //for debug
     int frame = 0; //for debug
 
-    public Room(int level) {
+    public Room(int level, int prevscore, int lives) {
+        score = prevscore;
+        numLives = lives;
         pacman = new Pacman(this);
         ghosts.add(new Ghost(this,"red"));
         ghosts.add(new Ghost(this,"pink"));

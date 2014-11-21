@@ -25,6 +25,8 @@ public class PacmanGame extends JFrame implements KeyListener {
     public LevelSplash currSplash;
     public boolean start;
     public int level = 1;
+    public int score = 0;
+    public int lives = 3;
 
     public static final int WIDTH = 336;
     public static final int HEIGHT= 480;
@@ -84,7 +86,7 @@ public class PacmanGame extends JFrame implements KeyListener {
         frame.setTitle("Pacman");
         g = frame.getContentPane().getGraphics();
         frame.getContentPane().add(gamePanel);
-        currentRoom = new Room(level); //Start at level one
+        currentRoom = new Room(level,score,lives); //Start at level one
         gamePanel.room = currentRoom;
         frame.addKeyListener(currentRoom);
         frame.pack();
@@ -97,6 +99,8 @@ public class PacmanGame extends JFrame implements KeyListener {
             }
             else if(currentRoom.dots.isEmpty()){
                 level++;
+                score = currentRoom.score;
+                lives = currentRoom.numLives;
                 running = false;
             }
         }
