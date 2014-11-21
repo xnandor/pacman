@@ -31,6 +31,7 @@ public class Pacman extends GameObject implements KeyListener {
     }
 
     public void update(float dt) {
+        updateAudio();
         int speed = 4;
         double x = boundingBox.getX();
         double y = boundingBox.getY();
@@ -108,6 +109,7 @@ public class Pacman extends GameObject implements KeyListener {
         if (velX == 0 && velY == 0) {
             spriteOffset = 0;
             spriteI = 0; spriteJ = 8;
+
         }
 
     }
@@ -118,7 +120,15 @@ public class Pacman extends GameObject implements KeyListener {
         drawSprite(g, 24, spriteI+spriteOffset,spriteJ, -5, -5);
         super.draw(g);
     }
-    
+
+    public void updateAudio() {
+        // CHOMP HAS 15800 SAMPLES
+        if (!AudioPlayer.CHOMP.isPlaying()) {
+            AudioPlayer.CHOMP.play();
+            AudioPlayer.CHOMP.loop(1986, 14862);
+        }
+    }
+
     public void die() {
         int velX = 0;
         int velY = 0;
@@ -146,8 +156,10 @@ public class Pacman extends GameObject implements KeyListener {
             desiredVelY = 1;
         }
         //suicide switch for testing live tracking
-        if (e.VK_SPACE == code){
+        if (e.VK_DELETE == code){
             room.numLives--;
+            AudioPlayer.stopAll();
+            AudioPlayer.DEATH.play();
         }
     }
 

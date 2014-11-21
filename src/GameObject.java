@@ -23,7 +23,7 @@ public class GameObject {
     public Rectangle boundingBox = new Rectangle();
     //spriteI and spriteJ are used by inherited objects to keep track of which sprite they want to draw.
     public int spriteI = 0;
-    public int spriteJ= 0;
+    public int spriteJ = 0;
 
     public GameObject() {
 
