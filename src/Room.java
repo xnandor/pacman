@@ -18,6 +18,8 @@ public class Room implements KeyListener {
     int numLives;
     int score;
     int highscore;
+    int dotsEaten = 0;
+    boolean fruit = false;
     int y = 0; //for debug
     int frame = 0; //for debug
 
@@ -174,6 +176,8 @@ public class Room implements KeyListener {
             g.setColor(Color.white); //DEMO...DELETE LATER
             g.drawLine(0, y, PacmanGame.WIDTH, y); //DEMO...DELETE LATER
         }
+        //Fruit draws
+
         pacman.draw(g);
         for (int i = 0; i < ghosts.size(); i++) {
             ghosts.get(i).draw(g);
