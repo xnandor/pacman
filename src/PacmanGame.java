@@ -16,11 +16,13 @@ public class PacmanGame extends JFrame implements KeyListener {
     public boolean running;
     public boolean dead = false;
     public boolean paused = false;
+    public boolean animate = false;
     public long dt = 0L;
     public long timePreviousFrame = System.currentTimeMillis();
     public long timeCurrentFrame  = System.currentTimeMillis();
     public long timeStarted       = System.currentTimeMillis();
     public long timeInterval      = 40L; //25 fps
+    public long SplashFrame;
     public Room currentRoom;
     public Menu currMenu;
     public LevelSplash currSplash;
@@ -144,13 +146,35 @@ public class PacmanGame extends JFrame implements KeyListener {
         ls.setVisible(true);
         AudioPlayer.stopAll();
         AudioPlayer.INTERMISSION.play();
-        //allow message to be displayed shortly
-        long test = System.currentTimeMillis();
-        while (System.currentTimeMillis() < test + 5000) {
-            //do nothing
+        animate = true;
+        SplashFrame = System.currentTimeMillis();
+        while (animate) {
+            SplashLoop();
         }
         ls.getContentPane().remove(LS);
         initGame();
+    }
+
+    private void SplashLoop() {
+        this.timeCurrentFrame = System.currentTimeMillis();
+        this.dt = this.timeCurrentFrame - this.timePreviousFrame;
+        this.timePreviousFrame = this.timeCurrentFrame;
+        long timeComputationStart = System.currentTimeMillis();
+        //UPDATE AND DRAW
+        this.update(dt);
+        this.repaint();
+        //sleep
+        try {
+            long timeComputationEnd = System.currentTimeMillis();
+            long timeComputationTaken = timeComputationEnd - timeComputationStart;
+            long timeToSleep = this.timeInterval - timeComputationTaken;
+            Thread.sleep(timeToSleep);
+        } catch (Exception e) {
+            System.err.println("ERROR: Could not sleep main thread.");
+            e.printStackTrace();
+        }
+        //see if Animation is done
+        if(System.currentTimeMillis()-SplashFrame > 5000) animate = false;
     }
 
     public void menuLoop() {
@@ -203,7 +227,9 @@ public class PacmanGame extends JFrame implements KeyListener {
 
     //UPDATE LOOP
     public void update(long dt) {
-        currentRoom.update(dt);
+
+        if(animate)currSplash.update(dt);
+        else currentRoom.update(dt);
     }
 
     @Override
@@ -222,6 +248,10 @@ public class PacmanGame extends JFrame implements KeyListener {
                 paused = true;
                 currentRoom.paused = true;
             }
+        }
+        //tester for level animation
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE){
+            running = false;
         }
     }
 
