@@ -43,6 +43,7 @@ public class PacmanGame extends JFrame implements KeyListener {
     //Start Screen before initialization
     public void menuInit() {
         AudioPlayer.init();
+        AudioPlayer.stopAll();
         AudioPlayer.BEGINNING.play();
         running = true;
         start = true;
@@ -118,6 +119,8 @@ public class PacmanGame extends JFrame implements KeyListener {
         if (dead) {
             this.update(dt);
             this.repaint();
+            //makes sure lives resets to three upon a game over
+            lives = 3;
             long test = System.currentTimeMillis();
             while (System.currentTimeMillis() < test + 1500) {
                 //do nothing

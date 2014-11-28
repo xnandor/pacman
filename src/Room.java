@@ -14,8 +14,11 @@ public class Room implements KeyListener {
     ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     ArrayList<Block> blocks = new ArrayList<Block>();
     ArrayList<Dot> dots = new ArrayList<Dot>();
+    ArrayList<Fruit> fruits = new ArrayList<Fruit>();
     int[] board = {};
     int numLives;
+    int level;
+    boolean fruitAdded = false;
     int score;
     int highscore;
     int dotsEaten = 0;
@@ -27,6 +30,7 @@ public class Room implements KeyListener {
         score = prevscore;
         numLives = lives;
         highscore = HS;
+        this.level = level;
         pacman = new Pacman(this);
         ghosts.add(new Ghost(this,"red"));
         ghosts.add(new Ghost(this,"pink"));
@@ -85,15 +89,41 @@ public class Room implements KeyListener {
         for (int i = 0; i < ghosts.size(); i++) {
             ghosts.get(i).update(dt);
         }
+        for(int i = 0; i < fruits.size(); i++) {
+            Fruit fruit = fruits.get(i);
+            fruit.update(dt);
+            if(!fruit.exists){
+                fruits.remove(i);
+            }
+        }
+        //adds fruit if 70 dots have been eaten
+        if(dotsEaten >= 70){
+            if(!fruitAdded) {
+                fruitAdded = true;
+                Fruit fr = new Fruit(this, level);
+                fruits.add(fr);
+            }
+        }
+
+
         //CHECK FOR EATS
         Rectangle pacmanRect = pacman.boundingBox;
-        for (int i = 0; i < dots.size(); i++) { //eat dots
+        for(int i = 0; i < dots.size(); i++) { //eat dots
             Dot dot = dots.get(i);
             if (pacmanRect.intersects(dot.boundingBox)) {
                 dots.remove(i);
+                dotsEaten++;
                 AudioPlayer.DOT.play();
                 //increments score by 10
                 score = score + 10;
+            }
+        }
+        for (int i = 0; i < fruits.size(); i++) { //eat dots
+            Fruit fruit = fruits.get(i);
+            if(pacmanRect.intersects(fruit.boundingBox)) {
+                fruits.remove(fruit);
+                AudioPlayer.EATFRUIT.play();
+                score += fruit.points;
             }
         }
         Rectangle pacmanRectGhost = pacman.boundingBox;
@@ -137,6 +167,19 @@ public class Room implements KeyListener {
         };
         lives.spriteI = numLives;
         lives.draw(g);
+        //Draw level
+        GameObject lvl = new GameObject() {
+                public void draw(Graphics2D g) {
+                    int offSet = 0;
+                    int lvl = spriteI;
+                    for(int i = lvl; i > 0; i--){
+                        this.drawSprite(g,24,i-1,5,312-offSet,410);
+                        offSet+=24;
+                    }
+                }
+        };
+        lvl.spriteI = level;
+        lvl.draw(g);
         //Draw gameover
         if(numLives <= 0){
             Symbols gameover = new Symbols("game over", 112, 240);
@@ -177,7 +220,12 @@ public class Room implements KeyListener {
             g.drawLine(0, y, PacmanGame.WIDTH, y); //DEMO...DELETE LATER
         }
         //Fruit draws
-
+        if (!fruits.isEmpty()){
+            for (int i = 0; i < fruits.size(); i++) {
+                Fruit fruit = fruits.get(i);
+                fruit.draw(g);
+            }
+        }
         pacman.draw(g);
         for (int i = 0; i < ghosts.size(); i++) {
             ghosts.get(i).draw(g);

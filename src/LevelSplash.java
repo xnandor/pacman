@@ -29,7 +29,7 @@ public class LevelSplash{
         g.fillRect(0, 0, 336, 492);
         pacman.draw(g,spriteOffset);
         RedGhost.draw(g,0);
-        if(RedGhost.boundingBox.getX() <= 0){
+        if(RedGhost.boundingBox.getX() <= -48){
             ScaredGhost.draw(g,0);
             pacmanTL.draw(g,spriteOffsetBig);
             pacmanTR.draw(g,spriteOffsetBig);
@@ -42,7 +42,7 @@ public class LevelSplash{
        elapsedTime += dt;
        pacman.update(dt);
        RedGhost.update(dt);
-       if(RedGhost.boundingBox.getX() <= 0) {
+       if(RedGhost.boundingBox.getX() <= -48) {
            ScaredGhost.update(dt);
            pacmanTL.update(dt);
            pacmanTR.update(dt);
