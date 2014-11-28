@@ -41,6 +41,6 @@ public class Fruit extends GameObject{
 
     public void update(float dt){
         creationTime+= dt;
-        if(creationTime >= 5000) exists = false;
+        if(creationTime >= 20000) exists = false;
     }
 }
