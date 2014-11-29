@@ -119,7 +119,7 @@ public class Room implements KeyListener {
                     score = score + 10;
                 }
             }
-            for (int i = 0; i < fruits.size(); i++) { //eat dots
+            for (int i = 0; i < fruits.size(); i++) { //eat fruits
                 Fruit fruit = fruits.get(i);
                 if (pacmanRect.intersects(fruit.boundingBox)) {
                     fruits.remove(fruit);
@@ -128,7 +128,7 @@ public class Room implements KeyListener {
                 }
             }
             Rectangle pacmanRectGhost = pacman.boundingBox;
-            for (int i = 0; i < ghosts.size(); i++) { //eat dots
+            for (int i = 0; i < ghosts.size(); i++) { //ghost collision
                 Ghost ghost = ghosts.get(i);
                 if (pacmanRectGhost.intersects(ghost.boundingBox)) {
                     //guarantees one death per collision
