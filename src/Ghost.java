@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
 public class Ghost extends GameObject {
-    
     Room room;
     String color;
     double totalTime = 0;
@@ -20,7 +19,7 @@ public class Ghost extends GameObject {
     //Desired velocity is used to make sure pacman still turns if key is pressed early.
     int desiredVelX = 0;
     int desiredVelY = 0;
-    
+
     public Ghost(Room room, String color) {
         super();
         this.color = color;
@@ -39,7 +38,7 @@ public class Ghost extends GameObject {
         }
         this.room = room;
     }
-    
+
     public void update(float dt) {
         double ranNum = Math.random()*4;
         if(ranNum < 1.0) {
@@ -134,7 +133,7 @@ public class Ghost extends GameObject {
                     spriteJ= 10;
                 }
             } else {  //Up
-                if(color.equals("red")) {
+                if (color.equals("red")) {
                     spriteI = 6;
                     spriteJ= 7;
                 } else if(color.equals("pink")) {
@@ -161,11 +160,11 @@ public class Ghost extends GameObject {
             }
         }
     }
-    
+
     public void draw(Graphics2D g) {
         drawSprite(g, 24, spriteI+spriteOffset,spriteJ, -5, -5);
         super.draw(g);
     }
-    
+
 }
 
