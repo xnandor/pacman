@@ -22,6 +22,8 @@ public class Pacman extends GameObject implements KeyListener {
     //Desired velocity is used to make sure pacman still turns if key is pressed early.
     int desiredVelX = 0;
     int desiredVelY = 0;
+    int coordX = 0;
+    int coordY = 0;
     boolean moving = false;
 
     public Pacman(Room room) {
@@ -48,19 +50,23 @@ public class Pacman extends GameObject implements KeyListener {
             velX = desiredVelX;
             velY = desiredVelY;
             boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
+            this.updateCoordinates();
         } else if(room.isLocationFree(nextLocation)) {
             moving = true;
             elapsedDirectionTime = 0;
             boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
+            this.updateCoordinates();
         } else {
             moving = false;
         }
         //Screen Wrap
         if (x > PacmanGame.WIDTH) {
             boundingBox.setLocation( -10, (int)y );
+            coordX += -88;
         }
         if (x < -10) {
             boundingBox.setLocation( PacmanGame.WIDTH, (int)y );
+            coordX += 88;
         }
         //Reset desired direction
         if (elapsedDirectionTime > 2500) {
@@ -103,8 +109,6 @@ public class Pacman extends GameObject implements KeyListener {
                 spriteI = 0;
                 spriteJ = 8;
             }
-        } else if (!moving) {
-
         }
         if (velX == 0 && velY == 0) {
             spriteOffset = 0;
@@ -130,11 +134,38 @@ public class Pacman extends GameObject implements KeyListener {
     }
 
     public void die() {
-        int velX = 0;
-        int velY = 0;
-        int desiredVelX = 0;
-        int desiredVelY = 0;
+        velX = 0;
+        velY = 0;
+        desiredVelX = 0;
+        desiredVelY = 0;
+        coordX = 0;
+        coordY = 0;
         this.boundingBox = new Rectangle((13*12)+8, 26*12+1, 11, 11);
+    }
+    
+    public void updateCoordinates() {
+        if ((Math.abs(velX) > Math.abs(velY))) { //Going left or right
+            if (velX > 0) {  //Right
+                coordX++;
+            } else if (velX < 0) {  //Left
+                coordX--;
+            }
+        } else {        //Going up or down
+            if (velY > 0) {  //Down
+                coordY++;
+            } else if (velY < 0) {  //Up
+                coordY--;
+            }
+        }
+        //System.out.println("Coordinates: " + coordX + " and " + coordY);
+    }
+    
+    public int getCoordinateX() {
+        return coordX;
+    }
+    
+    public int getCoordinateY() {
+        return coordY;
     }
 
     public void keyPressed(KeyEvent e) {
