@@ -23,6 +23,8 @@ public class Pacman extends GameObject implements KeyListener {
     //Desired velocity is used to make sure pacman still turns if key is pressed early.
     int desiredVelX = 0;
     int desiredVelY = 0;
+    int coordX = 0;
+    int coordY = 0;
     boolean moving = false;
 
     public Pacman(Room room) {
@@ -42,27 +44,31 @@ public class Pacman extends GameObject implements KeyListener {
             //Move to next location
             Rectangle nextLocation = new Rectangle(boundingBox);
             Rectangle nextDesiredLocation = new Rectangle(boundingBox);
-            nextLocation.setLocation((int) (x + velX * speed), (int) (y + velY * speed));
-            nextDesiredLocation.setLocation((int) (x + desiredVelX * speed), (int) (y + desiredVelY * speed));
+            nextLocation.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
+            nextDesiredLocation.setLocation( (int)(x+desiredVelX*speed), (int)(y+desiredVelY*speed) );
             if (room.isLocationFree(nextDesiredLocation)) {
                 elapsedDirectionTime = 0;
                 moving = true;
                 velX = desiredVelX;
                 velY = desiredVelY;
-                boundingBox.setLocation((int) (x + velX * speed), (int) (y + velY * speed));
-            } else if (room.isLocationFree(nextLocation)) {
+                boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
+                this.updateCoordinates();
+            } else if(room.isLocationFree(nextLocation)) {
                 moving = true;
                 elapsedDirectionTime = 0;
-                boundingBox.setLocation((int) (x + velX * speed), (int) (y + velY * speed));
+                boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
+                this.updateCoordinates();
             } else {
                 moving = false;
             }
             //Screen Wrap
             if (x > PacmanGame.WIDTH) {
-                boundingBox.setLocation(-10, (int) y);
+                boundingBox.setLocation( -10, (int)y );
+                coordX += -88;
             }
             if (x < -10) {
-                boundingBox.setLocation(PacmanGame.WIDTH, (int) y);
+                boundingBox.setLocation( PacmanGame.WIDTH, (int)y );
+                coordX += 88;
             }
             //Reset desired direction
             if (elapsedDirectionTime > 2500) {
@@ -112,10 +118,8 @@ public class Pacman extends GameObject implements KeyListener {
                 spriteOffset = 0;
                 spriteI = 0;
                 spriteJ = 8;
-
             }
-        }
-        else{
+        } else {
             if(spriteI < 14) spriteI++;
             else reset();
         }
@@ -141,15 +145,38 @@ public class Pacman extends GameObject implements KeyListener {
         spriteI = 4;
         spriteJ = 8;
         spriteOffset = 0;
+        coordX = 0;
+        coordY = 0;
     }
 
     public void reset() {
-        velX = 0;
-        velY = 0;
-        desiredVelX = 0;
-        desiredVelY = 0;
         this.boundingBox = new Rectangle((13*12)+8, 26*12+1, 11, 11);
         dead = false;
+    }
+
+    public void updateCoordinates() {
+        if ((Math.abs(velX) > Math.abs(velY))) { //Going left or right
+            if (velX > 0) {  //Right
+                coordX++;
+            } else if (velX < 0) {  //Left
+                coordX--;
+            }
+        } else {        //Going up or down
+            if (velY > 0) {  //Down
+                coordY++;
+            } else if (velY < 0) {  //Up
+                coordY--;
+            }
+        }
+        //System.out.println("Coordinates: " + coordX + " and " + coordY);
+    }
+    
+    public int getCoordinateX() {
+        return coordX;
+    }
+    
+    public int getCoordinateY() {
+        return coordY;
     }
 
     public void keyPressed(KeyEvent e) {

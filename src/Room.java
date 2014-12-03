@@ -15,6 +15,7 @@ public class Room implements KeyListener {
     ArrayList<Block> blocks = new ArrayList<Block>();
     ArrayList<Dot> dots = new ArrayList<Dot>();
     ArrayList<Fruit> fruits = new ArrayList<Fruit>();
+    ArrayList<SuperDot> sdots = new ArrayList<SuperDot>();
     int[] board = {};
     int numLives;
     int level;
@@ -25,6 +26,9 @@ public class Room implements KeyListener {
     boolean fruit = false;
     int y = 0; //for debug
     int frame = 0; //for debug
+    int globalCount = 0;
+    int dotTimer = 0;
+    boolean isGlobal = false;
 
     public Room(int level, int prevscore, int lives, int HS) {
         score = prevscore;
@@ -41,7 +45,7 @@ public class Room implements KeyListener {
             2, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 45, 44, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,  1,
             4,100,100,100,100,100,100,100,100,100,100,100,100, 27, 26,100,100,100,100,100,100,100,100,100,100,100,100,  3,
             4,100, 41, 15, 15, 40,100, 41, 15, 15, 15, 40,100, 27, 26,100, 41, 15, 15, 15, 40,100, 41, 15, 15, 40,100,  3,
-            4,100, 27,  0,  0, 26,100, 27,  0,  0,  0, 26,100, 27, 26,100, 27,  0,  0,  0, 26,100, 27,  0,  0, 26,100,  3,
+            4,200, 27,  0,  0, 26,100, 27,  0,  0,  0, 26,100, 27, 26,100, 27,  0,  0,  0, 26,100, 27,  0,  0, 26,200,  3,
             4,100, 43, 22, 22, 42,100, 43, 22, 22, 22, 42,100, 43, 42,100, 43, 22, 22, 22, 42,100, 43, 22, 22, 42,100,  3,
             4,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,  3,
             4,100, 41, 15, 15, 40,100, 41, 40,100, 41, 15, 15, 15, 15, 15, 15, 40,100, 41, 40,100, 41, 15, 15, 40,100,  3,
@@ -50,7 +54,7 @@ public class Room implements KeyListener {
             6, 13, 13, 13, 13, 40,100, 27, 38, 15, 15, 40,  0, 27, 26,  0, 41, 15, 15, 39, 26,100, 41, 13, 13, 13, 13,  5,
             0,  0,  0,  0,  0,  4,100, 27, 36, 22, 22, 42,  0, 43, 42,  0, 43, 22, 22, 37, 26,100,  3,  0,  0,  0,  0,  0,
             0,  0,  0,  0,  0,  4,100, 27, 26,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 27, 26,100,  3,  0,  0,  0,  0,  0,
-            0,  0,  0,  0,  0,  4,100, 27, 26,  0, 31, 13, 35,  0,  0, 34, 13, 30,  0, 27, 26,100,  3,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,  0,  4,100, 27, 26,  0, 31, 13, 35,  -1,  -1, 34, 13, 30,  0, 27, 26,100,  3,  0,  0,  0,  0,  0,
             12, 12, 12, 12, 12, 42,100, 43, 42,  0,  3,  0,  0,  0,  0,  0,  0,  4,  0, 43, 42,100, 43, 12, 12, 12, 12, 12,
             0,  0,  0,  0,  0,  0,100,  0,  0,  0,  3,  0,  0,  0,  0,  0,  0,  4,  0,  0,  0,100,  0,  0,  0,  0,  0,  0,
             13, 13, 13, 13, 13, 40,100, 41, 40,  0,  3,  0,  0,  0,  0,  0,  0,  4,  0, 41, 40,100, 41, 13, 13, 13, 13, 13,
@@ -61,7 +65,7 @@ public class Room implements KeyListener {
             4,100,100,100,100,100,100,100,100,100,100,100,100, 27, 26,100,100,100,100,100,100,100,100,100,100,100,100,  3,
             4,100, 41, 15, 15, 40,100, 41, 15, 15, 15, 40,100, 27, 26,100, 41, 15, 15, 15, 40,100, 41, 15, 15, 40,100,  3,
             4,100, 43, 22, 37, 26,100, 43, 22, 22, 22, 42,100, 43, 42,100, 43, 22, 22, 22, 42,100, 27, 36, 22, 42,100,  3,
-            4,100,100,100, 27, 26,100,100,100,100,100,100,100,  0, 0, 100,100,100,100,100,100,100, 27, 26,100,100,100,  3,
+            4,200,100,100, 27, 26,100,100,100,100,100,100,100,  0, 0, 100,100,100,100,100,100,100, 27, 26,100,100,200,  3,
             8, 15, 40,100, 27, 26,100, 41, 40,100, 41, 15, 15, 15, 15, 15, 15, 40,100, 41, 40,100, 27, 26,100, 41, 15,  7,
             10, 22, 42,100, 43, 42,100, 27, 26,100, 43, 22, 22, 37, 36, 22, 22, 42,100, 27, 26,100, 43, 42,100, 43, 22,  9,
             4,100,100,100,100,100,100, 27, 26,100,100,100,100, 27, 26,100,100,100,100, 27, 26,100,100,100,100,100,100,  3,
@@ -80,6 +84,9 @@ public class Room implements KeyListener {
             } else if (board[i] == 100) {
                 Dot dot = new Dot(m, n+3);
                 dots.add(dot);
+            } else if (board[i] == 200) {
+                SuperDot sdot = new SuperDot(m, n+3);
+                sdots.add(sdot);
             }
         }
     }
@@ -87,8 +94,12 @@ public class Room implements KeyListener {
     public void update(float dt) {
         if (!pacman.dead) {
             pacman.update(dt);
+            dotTimer += dt;
             for (int i = 0; i < ghosts.size(); i++) {
                 ghosts.get(i).update(dt);
+            }
+            for (int i = 0; i < sdots.size(); i++) {
+                sdots.get(i).update(dt);
             }
             for (int i = 0; i < fruits.size(); i++) {
                 Fruit fruit = fruits.get(i);
@@ -106,17 +117,34 @@ public class Room implements KeyListener {
                 }
             }
 
-
             //CHECK FOR EATS
             Rectangle pacmanRect = pacman.boundingBox;
             for (int i = 0; i < dots.size(); i++) { //eat dots
                 Dot dot = dots.get(i);
                 if (pacmanRect.intersects(dot.boundingBox)) {
-                    dots.remove(i);
+                    dotTimer = 0;
                     dotsEaten++;
+                    dots.remove(i);
                     AudioPlayer.DOT.play();
                     //increments score by 10
                     score = score + 10;
+                    if(isGlobal == true) {
+                        globalCount += 1;
+                    }
+                }
+            }
+            for (int i = 0; i < sdots.size(); i++) { //eat superdots
+                SuperDot sdot = sdots.get(i);
+                if (pacmanRect.intersects(sdot.boundingBox)) {
+                    dotTimer = 0;
+                    dotsEaten++;
+                    sdots.remove(i);
+                    AudioPlayer.DOT.play();
+                    //increments score by 50
+                    score = score + 50;
+                    for (int j = 0; j < ghosts.size(); j++) {
+                        ghosts.get(j).eatable();
+                    }
                 }
             }
             for (int i = 0; i < fruits.size(); i++) { //eat fruits
@@ -128,24 +156,37 @@ public class Room implements KeyListener {
                 }
             }
             Rectangle pacmanRectGhost = pacman.boundingBox;
-            for (int i = 0; i < ghosts.size(); i++) { //ghost collision
+            for (int i = 0; i < ghosts.size(); i++) { //eat ghosts
                 Ghost ghost = ghosts.get(i);
                 if (pacmanRectGhost.intersects(ghost.boundingBox)) {
-                    //guarantees one death per collision
-                    if (!pacman.dead) {
+                    if(ghost.isGhostEatable() == true) {
+                        ghost.eat();
+                        if(this.numOfGhostsEaten() == 1) {
+                            score += 200;
+                        } else if(this.numOfGhostsEaten() == 2) {
+                            score += 400;
+                        } else if(this.numOfGhostsEaten() == 3) {
+                            score += 800;
+                        } else if(this.numOfGhostsEaten() == 4) {
+                            score += 1600;
+                        }
+                    } else if(ghost.isGhostEaten() == true) {
+                        // do nothing
+                    } else {
                         pacman.die();
+                        for(int j = 0; j < ghosts.size(); j++) {
+                            ghosts.get(j).reset();
+                        }
                         AudioPlayer.DEATH.play();
                         numLives--;
+                        isGlobal = true;
+                        globalCount = 0;
                     }
                 }
             }
-            //DEBUG
-            if (PacmanGame.DEBUG) {
-                y = (int) (100 * Math.sin((double) this.frame / 10)) + 200;
-                frame++;
-            }
+        } else {
+            pacman.update(dt);
         }
-        else pacman.update(dt);
     }
 
     public void draw(Graphics2D g) {
@@ -161,6 +202,9 @@ public class Room implements KeyListener {
         for (int i = 0; i < dots.size(); i++) {
             Dot dot = dots.get(i);
             dot.draw(g);
+        }for (int i = 0; i < sdots.size(); i++) {
+            SuperDot sdot = sdots.get(i);
+            sdot.draw(g);
         }
         //Draw number of lives
         GameObject lives = new GameObject() {
@@ -263,6 +307,82 @@ public class Room implements KeyListener {
         }
         return free;
     }
-
+    
+    public boolean isLocationFree(Rectangle r, boolean isGhostReturning) {
+        boolean free = true;
+        for (int i = 0; i < blocks.size(); i++) {
+            Block block = blocks.get(i);
+            if (r.intersects(block.boundingBox)) {
+                if(isGhostReturning == true && block.isGhostAccessible() == true) {
+                    free = true;
+                } else {
+                    free = false;
+                }
+            }
+        }
+        return free;
+    }
+    
+    public int getScore() {
+        return score;
+    }
+    
+    public int getGlobalCount() {
+        return globalCount;
+    }
+    
+    public int getDotTimer() {
+        return dotTimer;
+    }
+    
+    public void setDotTimer(int timer) {
+        dotTimer = timer;
+    }
+    
+    public int getPacmanX() {
+        return pacman.getCoordinateX();
+    }
+    
+    public int getPacmanY() {
+        return pacman.getCoordinateY();
+    }
+    
+    public int getPinkX() {
+        for (int i = 0; i < ghosts.size(); i++) {
+            if(ghosts.get(i).getColor().equals("pink")) {
+                return ghosts.get(i).getCoordinateX();
+            }
+        }
+        return 0;
+    }
+    
+    public int getPinkY() {
+        for (int i = 0; i < ghosts.size(); i++) {
+            if(ghosts.get(i).getColor().equals("pink")) {
+                return ghosts.get(i).getCoordinateY();
+            }
+        }
+        return 0;
+    }
+    
+    public int numOfGhostsInBox() {
+        int count = 0;
+        for (int i = 0; i < ghosts.size(); i++) {
+            if(ghosts.get(i).getBoxStatus()) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    public int numOfGhostsEaten() {
+        int count = 0;
+        for (int i = 0; i < ghosts.size(); i++) {
+            if(ghosts.get(i).wasGhostEaten()) {
+                count++;
+            }
+        }
+        return count;
+    }
 }
 
