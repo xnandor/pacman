@@ -124,6 +124,7 @@ public class Room implements KeyListener {
                 if (pacmanRect.intersects(dot.boundingBox)) {
                     dotTimer = 0;
                     dots.remove(i);
+                    dotsEaten++;
                     AudioPlayer.DOT.play();
                     //increments score by 10
                     score = score + 10;
@@ -137,6 +138,7 @@ public class Room implements KeyListener {
                 if (pacmanRect.intersects(sdot.boundingBox)) {
                     dotTimer = 0;
                     sdots.remove(i);
+                    dotsEaten++;
                     AudioPlayer.DOT.play();
                     //increments score by 50
                     score = score + 50;
