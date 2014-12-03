@@ -19,9 +19,12 @@ public class Pacman extends GameObject implements KeyListener {
     //Velocities
     int velX = 0;
     int velY = 0;
+    boolean dead = false;
     //Desired velocity is used to make sure pacman still turns if key is pressed early.
     int desiredVelX = 0;
     int desiredVelY = 0;
+    int coordX = 0;
+    int coordY = 0;
     boolean moving = false;
 
     public Pacman(Room room) {
@@ -32,86 +35,94 @@ public class Pacman extends GameObject implements KeyListener {
 
     public void update(float dt) {
         updateAudio();
-        int speed = 4;
-        double x = boundingBox.getX();
-        double y = boundingBox.getY();
-        elapsedChompTime += dt;
-        elapsedDirectionTime += dt;
-        //Move to next location
-        Rectangle nextLocation = new Rectangle(boundingBox);
-        Rectangle nextDesiredLocation = new Rectangle(boundingBox);
-        nextLocation.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
-        nextDesiredLocation.setLocation( (int)(x+desiredVelX*speed), (int)(y+desiredVelY*speed) );
-        if (room.isLocationFree(nextDesiredLocation)) {
-            elapsedDirectionTime = 0;
-            moving = true;
-            velX = desiredVelX;
-            velY = desiredVelY;
-            boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
-        } else if(room.isLocationFree(nextLocation)) {
-            moving = true;
-            elapsedDirectionTime = 0;
-            boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
-        } else {
-            moving = false;
-        }
-        //Screen Wrap
-        if (x > PacmanGame.WIDTH) {
-            boundingBox.setLocation( -10, (int)y );
-        }
-        if (x < -10) {
-            boundingBox.setLocation( PacmanGame.WIDTH, (int)y );
-        }
-        //Reset desired direction
-        if (elapsedDirectionTime > 2500) {
-            elapsedDirectionTime = 0;
-            desiredVelX = velX;
-            desiredVelY = velY;
-        }
-        //Animate Direction
-        if (chompPhase%3 != 2) {
-            if ((Math.abs(velX) > Math.abs(velY))) { //Going left or right
-                if (velX > 0) {  //Right
-                    spriteI = 12;
-                    spriteJ= 7;
-                } else {  //Left
+        if(!dead) {
+            int speed = 4;
+            double x = boundingBox.getX();
+            double y = boundingBox.getY();
+            elapsedChompTime += dt;
+            elapsedDirectionTime += dt;
+            //Move to next location
+            Rectangle nextLocation = new Rectangle(boundingBox);
+            Rectangle nextDesiredLocation = new Rectangle(boundingBox);
+            nextLocation.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
+            nextDesiredLocation.setLocation( (int)(x+desiredVelX*speed), (int)(y+desiredVelY*speed) );
+            if (room.isLocationFree(nextDesiredLocation)) {
+                elapsedDirectionTime = 0;
+                moving = true;
+                velX = desiredVelX;
+                velY = desiredVelY;
+                boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
+                this.updateCoordinates();
+            } else if(room.isLocationFree(nextLocation)) {
+                moving = true;
+                elapsedDirectionTime = 0;
+                boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
+                this.updateCoordinates();
+            } else {
+                moving = false;
+            }
+            //Screen Wrap
+            if (x > PacmanGame.WIDTH) {
+                boundingBox.setLocation( -10, (int)y );
+                coordX += -88;
+            }
+            if (x < -10) {
+                boundingBox.setLocation( PacmanGame.WIDTH, (int)y );
+                coordX += 88;
+            }
+            //Reset desired direction
+            if (elapsedDirectionTime > 2500) {
+                elapsedDirectionTime = 0;
+                desiredVelX = velX;
+                desiredVelY = velY;
+            }
+            //Animate Direction
+            if (chompPhase % 3 != 2) {
+                if ((Math.abs(velX) > Math.abs(velY))) { //Going left or right
+                    if (velX > 0) {  //Right
+                        spriteI = 12;
+                        spriteJ = 7;
+                    } else {  //Left
+                        spriteI = 0;
+                        spriteJ = 11;
+                    }
+                } else {        //Going up or down
+                    if (velY > 0) {  //Down
+                        spriteI = 13;
+                        spriteJ = 7;
+                    } else {  //Up
+                        spriteI = 1;
+                        spriteJ = 11;
+                    }
+                }
+            }
+            //Animate Chomp
+            if (elapsedChompTime > 50 && moving) {
+                elapsedChompTime = 0;
+                chompPhase++;
+                if (chompPhase % 3 == 0) {
+                    spriteOffset = 0;
+                }
+                if (chompPhase % 3 == 1) {
+                    spriteOffset = 2;
+                }
+                if (chompPhase % 3 == 2) {
+                    spriteOffset = 0;
                     spriteI = 0;
-                    spriteJ= 11;
+                    spriteJ = 8;
                 }
-            } else {        //Going up or down
-                if (velY > 0) {  //Down
-                    spriteI = 13;
-                    spriteJ= 7;
-                } else {  //Up
-                    spriteI = 1;
-                    spriteJ= 11;
-                }
+            } else if (!moving) {
+
             }
-        }
-        //Animate Chomp
-        if (elapsedChompTime > 50 && moving) {
-            elapsedChompTime = 0;
-            chompPhase++;
-            if (chompPhase%3 == 0) {
-                spriteOffset=0;
-            }
-            if (chompPhase%3 == 1) {
-                spriteOffset=2;
-            }
-            if (chompPhase%3 == 2) {
-                spriteOffset=0;
+            if (velX == 0 && velY == 0) {
+                spriteOffset = 0;
                 spriteI = 0;
                 spriteJ = 8;
             }
-        } else if (!moving) {
-
+        } else {
+            if(spriteI < 14) spriteI++;
+            else reset();
         }
-        if (velX == 0 && velY == 0) {
-            spriteOffset = 0;
-            spriteI = 0; spriteJ = 8;
-
-        }
-
     }
 
     public void draw(Graphics2D g) {
@@ -129,12 +140,43 @@ public class Pacman extends GameObject implements KeyListener {
         }
     }
 
-    public void die() {
-        int velX = 0;
-        int velY = 0;
-        int desiredVelX = 0;
-        int desiredVelY = 0;
+    public void die(){
+        dead = true;
+        spriteI = 4;
+        spriteJ = 8;
+        spriteOffset = 0;
+        coordX = 0;
+        coordY = 0;
+    }
+
+    public void reset() {
         this.boundingBox = new Rectangle((13*12)+8, 26*12+1, 11, 11);
+        dead = false;
+    }
+
+    public void updateCoordinates() {
+        if ((Math.abs(velX) > Math.abs(velY))) { //Going left or right
+            if (velX > 0) {  //Right
+                coordX++;
+            } else if (velX < 0) {  //Left
+                coordX--;
+            }
+        } else {        //Going up or down
+            if (velY > 0) {  //Down
+                coordY++;
+            } else if (velY < 0) {  //Up
+                coordY--;
+            }
+        }
+        //System.out.println("Coordinates: " + coordX + " and " + coordY);
+    }
+    
+    public int getCoordinateX() {
+        return coordX;
+    }
+    
+    public int getCoordinateY() {
+        return coordY;
     }
 
     public void keyPressed(KeyEvent e) {

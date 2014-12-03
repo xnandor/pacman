@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 
 public class Block extends GameObject {
 
+    boolean isGhostAccessible = false;
     // WALL SPRITE LOCATIONS
     //   - start (16, 6) end (31, 6)
     //   - and start ( 0, 7) end (28, 7)
@@ -43,9 +44,12 @@ public class Block extends GameObject {
     // 43- single line, bottom left corner, outer
     //
     // 100 - dot
-    // 101 - super dot
+    // 200 - super dot
     public Block(int blockNumber, int gridX, int gridY) {
         super();
+        if(blockNumber == -1) {
+            isGhostAccessible = true;
+        }
         blockNumber--;
         if (blockNumber < 16) {
             spriteI = 16+blockNumber;
@@ -60,6 +64,10 @@ public class Block extends GameObject {
     public void draw(Graphics2D g) {
         drawSprite(g, 12, spriteI, spriteJ);
         super.draw(g);
+    }
+    
+    public boolean isGhostAccessible() {
+        return isGhostAccessible;
     }
 }
 
