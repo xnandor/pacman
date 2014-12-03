@@ -32,6 +32,7 @@ public class Ghost extends GameObject {
     int modeTimer = 0;
     int modeSwitches = 0;
     int eatableTime = 0;
+    double justAteTimer = 0;
     boolean isEatable = false;
     boolean isEaten = false;
     boolean wasEaten = false;
@@ -77,18 +78,19 @@ public class Ghost extends GameObject {
     }
 
     public void update(float dt) {
+
         double x = boundingBox.getX();
         double y = boundingBox.getY();
         elapsedMovingTime += dt;
         eatableTime += dt;
-        if(isEatable == false) {
+        if (isEatable == false) {
             modeTimer += dt;
         }
         chaseOrScatter = this.getGhostMode();
         this.getTarget();
-        if(isOutOfBox == true) {
-            if(isEaten == true) {
-                if(coordX == targetX && coordY == targetY) {
+        if (isOutOfBox == true) {
+            if (isEaten == true) {
+                if (coordX == targetX && coordY == targetY) {
                     isEaten = false;
                     isOutOfBox = false;
                     exitTime = 0;
@@ -97,93 +99,95 @@ public class Ghost extends GameObject {
             exitTime += dt;
             //Move to next location
             Rectangle nextLocation = new Rectangle(boundingBox);
-            if(exitTime > 300) {
-                this.getNextLocation(nextLocation,x,y);
+            if (exitTime > 300) {
+                this.getNextLocation(nextLocation, x, y);
                 velX = desiredVelX;
                 velY = desiredVelY;
             } else {
-                if(coordX == 0 && hasPassed1 == false) {
-                    velX = -1; velY = 0;
+                if (coordX == 0 && hasPassed1 == false) {
+                    velX = -1;
+                    velY = 0;
                     hasPassed1 = true;
                 } else if ((coordX == -14 || coordX == 13) && hasPassed2 == false) {
-                    velX = 0; velY = 1;
+                    velX = 0;
+                    velY = 1;
                     hasPassed2 = true;
                 }
             }
-            nextLocation.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
-            boundingBox.setLocation( (int)(x+velX*speed), (int)(y+velY*speed) );
+            nextLocation.setLocation((int) (x + velX * speed), (int) (y + velY * speed));
+            boundingBox.setLocation((int) (x + velX * speed), (int) (y + velY * speed));
             this.updateCoordinates();
         } else {
-            this.boxBehavior(x,y);
+            this.boxBehavior(x, y);
         }
         if (x > PacmanGame.WIDTH) {
-            boundingBox.setLocation( -10, (int)y );
+            boundingBox.setLocation(-10, (int) y);
             coordX += -88;
         }
         if (x < -10) {
-            boundingBox.setLocation( PacmanGame.WIDTH, (int)y );
+            boundingBox.setLocation(PacmanGame.WIDTH, (int) y);
             coordX += 88;
         }
         //Animate Direction
-        if(isEaten == false) {
+        if (isEaten == false) {
             if ((Math.abs(velX) > Math.abs(velY))) { //Going left or right
                 if (velX > 0) {  //Right
-                    if(color.equals("red")) {
+                    if (color.equals("red")) {
                         spriteI = 0;
-                        spriteJ= 7;
-                    } else if(color.equals("pink")) {
+                        spriteJ = 7;
+                    } else if (color.equals("pink")) {
                         spriteI = 0;
-                        spriteJ= 9;
-                    } else if(color.equals("blue")) {
+                        spriteJ = 9;
+                    } else if (color.equals("blue")) {
                         spriteI = 8;
-                        spriteJ= 9;
+                        spriteJ = 9;
                     } else {
                         spriteI = 0;
-                        spriteJ= 10;
+                        spriteJ = 10;
                     }
                 } else {  //Left
-                    if(color.equals("red")) {
+                    if (color.equals("red")) {
                         spriteI = 4;
-                        spriteJ= 7;
-                    } else if(color.equals("pink")) {
+                        spriteJ = 7;
+                    } else if (color.equals("pink")) {
                         spriteI = 4;
-                        spriteJ= 9;
-                    } else if(color.equals("blue")) {
+                        spriteJ = 9;
+                    } else if (color.equals("blue")) {
                         spriteI = 12;
-                        spriteJ= 9;
+                        spriteJ = 9;
                     } else {
                         spriteI = 4;
-                        spriteJ= 10;
+                        spriteJ = 10;
                     }
                 }
             } else {        //Going up or down
                 if (velY > 0) {  //Down
-                    if(color.equals("red")) {
+                    if (color.equals("red")) {
                         spriteI = 2;
-                        spriteJ= 7;
-                    } else if(color.equals("pink")) {
+                        spriteJ = 7;
+                    } else if (color.equals("pink")) {
                         spriteI = 2;
-                        spriteJ= 9;
-                    } else if(color.equals("blue")) {
+                        spriteJ = 9;
+                    } else if (color.equals("blue")) {
                         spriteI = 10;
-                        spriteJ= 9;
+                        spriteJ = 9;
                     } else {
                         spriteI = 2;
-                        spriteJ= 10;
+                        spriteJ = 10;
                     }
                 } else {  //Up
-                    if(color.equals("red")) {
+                    if (color.equals("red")) {
                         spriteI = 6;
-                        spriteJ= 7;
-                    } else if(color.equals("pink")) {
+                        spriteJ = 7;
+                    } else if (color.equals("pink")) {
                         spriteI = 6;
-                        spriteJ= 9;
-                    } else if(color.equals("blue")) {
+                        spriteJ = 9;
+                    } else if (color.equals("blue")) {
                         spriteI = 14;
-                        spriteJ= 9;
+                        spriteJ = 9;
                     } else {
                         spriteI = 6;
-                        spriteJ= 10;
+                        spriteJ = 10;
                     }
                 }
             }
@@ -207,37 +211,38 @@ public class Ghost extends GameObject {
         if (elapsedMovingTime > 50) {
             elapsedMovingTime = 0;
             movingPhase++;
-            if (movingPhase%2 == 0) {
-                spriteOffset=0;
+            if (movingPhase % 2 == 0) {
+                spriteOffset = 0;
             }
-            if (movingPhase%2 == 1) {
-                spriteOffset=1;
+            if (movingPhase % 2 == 1) {
+            spriteOffset = 1;
             }
         }
-        if(eatableTime > 6500 && isEatable == true) {
+        if (eatableTime > 6500 && isEatable == true) {
             isEatable = false;
             wasEaten = false;
-        } else if(eatableTime > 4000 && isEatable == true) {
+        } else if (eatableTime > 4000 && isEatable == true) {
             ghostPhase++;
-            if (ghostPhase%10 < 4) {
-                ghostOffsetX=0;
-                ghostOffsetY=0;
-            }
-            if (ghostPhase%10 > 4) {
-                ghostOffsetX=-8;
-                ghostOffsetY=5;
+            if (ghostPhase % 10 < 4) {
+                ghostOffsetX = 0;
+                ghostOffsetY = 0;
+        }
+            if (ghostPhase % 10 > 4) {
+                ghostOffsetX = -8;
+                ghostOffsetY = 5;
             }
         }
     }
 
+
     public void draw(Graphics2D g) {
-        if(isEatable == true) {
-            drawSprite(g, 24, 12+spriteOffset+ghostOffsetX,6+ghostOffsetY, -5, -5);
-        } else if(justAte == true) {
-            drawSprite(g, 24, 7+room.numOfGhostsEaten(), 7, -5, -5);
-            justAte = false;
+        if (isEatable == true) {
+            drawSprite(g, 24, 12 + spriteOffset + ghostOffsetX, 6 + ghostOffsetY, -5, -5);
+        } else if (justAte == true) {
+            drawSprite(g, 24, 7 + room.numOfGhostsEaten(), 7, -5, -5);
+            long test = System.currentTimeMillis();
         } else {
-            drawSprite(g, 24, spriteI+spriteOffset,spriteJ, -5, -5);
+            drawSprite(g, 24, spriteI + spriteOffset, spriteJ, -5, -5);
         }
         super.draw(g);
     }

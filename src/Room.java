@@ -29,6 +29,8 @@ public class Room implements KeyListener {
     int globalCount = 0;
     int dotTimer = 0;
     boolean isGlobal = false;
+    boolean ghostDead = false;
+    double ghostDeadTimer = 0;
 
     public Room(int level, int prevscore, int lives, int HS) {
         score = prevscore;
@@ -93,98 +95,120 @@ public class Room implements KeyListener {
 
     public void update(float dt) {
         if (!pacman.dead) {
-            pacman.update(dt);
-            dotTimer += dt;
             for (int i = 0; i < ghosts.size(); i++) {
-                ghosts.get(i).update(dt);
-            }
-            for (int i = 0; i < sdots.size(); i++) {
-                sdots.get(i).update(dt);
-            }
-            for (int i = 0; i < fruits.size(); i++) {
-                Fruit fruit = fruits.get(i);
-                fruit.update(dt);
-                if (!fruit.exists) {
-                    fruits.remove(i);
-                }
-            }
-            //adds fruit if 70 dots have been eaten
-            if (dotsEaten >= 70) {
-                if (!fruitAdded) {
-                    fruitAdded = true;
-                    Fruit fr = new Fruit(this, level);
-                    fruits.add(fr);
-                }
-            }
-
-            //CHECK FOR EATS
-            Rectangle pacmanRect = pacman.boundingBox;
-            for (int i = 0; i < dots.size(); i++) { //eat dots
-                Dot dot = dots.get(i);
-                if (pacmanRect.intersects(dot.boundingBox)) {
-                    dotTimer = 0;
-                    dotsEaten++;
-                    dots.remove(i);
-                    AudioPlayer.DOT.play();
-                    //increments score by 10
-                    score = score + 10;
-                    if(isGlobal == true) {
-                        globalCount += 1;
-                    }
-                }
-            }
-            for (int i = 0; i < sdots.size(); i++) { //eat superdots
-                SuperDot sdot = sdots.get(i);
-                if (pacmanRect.intersects(sdot.boundingBox)) {
-                    dotTimer = 0;
-                    dotsEaten++;
-                    sdots.remove(i);
-                    AudioPlayer.DOT.play();
-                    //increments score by 50
-                    score = score + 50;
-                    for (int j = 0; j < ghosts.size(); j++) {
-                        ghosts.get(j).eatable();
-                    }
-                }
-            }
-            for (int i = 0; i < fruits.size(); i++) { //eat fruits
-                Fruit fruit = fruits.get(i);
-                if (pacmanRect.intersects(fruit.boundingBox)) {
-                    fruits.remove(fruit);
-                    AudioPlayer.EATFRUIT.play();
-                    score += fruit.points;
-                }
-            }
-            Rectangle pacmanRectGhost = pacman.boundingBox;
-            for (int i = 0; i < ghosts.size(); i++) { //eat ghosts
                 Ghost ghost = ghosts.get(i);
-                if (pacmanRectGhost.intersects(ghost.boundingBox)) {
-                    if(ghost.isGhostEatable() == true) {
-                        ghost.eat();
-                        if(this.numOfGhostsEaten() == 1) {
-                            score += 200;
-                        } else if(this.numOfGhostsEaten() == 2) {
-                            score += 400;
-                        } else if(this.numOfGhostsEaten() == 3) {
-                            score += 800;
-                        } else if(this.numOfGhostsEaten() == 4) {
-                            score += 1600;
+                if (ghost.justAte == true) {
+                    ghostDead = true;
+                }
+            }
+            if (!ghostDead) {
+                pacman.update(dt);
+                dotTimer += dt;
+                for (int i = 0; i < ghosts.size(); i++) {
+                    ghosts.get(i).update(dt);
+                }
+                for (int i = 0; i < sdots.size(); i++) {
+                    sdots.get(i).update(dt);
+                }
+                for (int i = 0; i < fruits.size(); i++) {
+                    Fruit fruit = fruits.get(i);
+                    fruit.update(dt);
+                    if (!fruit.exists) {
+                        fruits.remove(i);
+                    }
+                }
+                //adds fruit if 70 dots have been eaten
+                if (dotsEaten >= 70) {
+                    if (!fruitAdded) {
+                        fruitAdded = true;
+                        Fruit fr = new Fruit(this, level);
+                        fruits.add(fr);
+                    }
+                }
+
+                //CHECK FOR EATS
+                Rectangle pacmanRect = pacman.boundingBox;
+                for (int i = 0; i < dots.size(); i++) { //eat dots
+                    Dot dot = dots.get(i);
+                    if (pacmanRect.intersects(dot.boundingBox)) {
+                        dotTimer = 0;
+                        dotsEaten++;
+                        dots.remove(i);
+                        AudioPlayer.DOT.play();
+                        //increments score by 10
+                        score = score + 10;
+                        if (isGlobal == true) {
+                            globalCount += 1;
                         }
-                    } else if(ghost.isGhostEaten() == true) {
-                        // do nothing
-                    } else {
-                        pacman.die();
-                        for(int j = 0; j < ghosts.size(); j++) {
-                            ghosts.get(j).reset();
+                    }
+                }
+                for (int i = 0; i < sdots.size(); i++) { //eat superdots
+                    SuperDot sdot = sdots.get(i);
+                    if (pacmanRect.intersects(sdot.boundingBox)) {
+                        dotTimer = 0;
+                        dotsEaten++;
+                        sdots.remove(i);
+                        AudioPlayer.DOT.play();
+                        //increments score by 50
+                        score = score + 50;
+                        for (int j = 0; j < ghosts.size(); j++) {
+                            ghosts.get(j).eatable();
                         }
-                        AudioPlayer.DEATH.play();
-                        numLives--;
-                        isGlobal = true;
-                        globalCount = 0;
+                    }
+                }
+                for (int i = 0; i < fruits.size(); i++) { //eat fruits
+                    Fruit fruit = fruits.get(i);
+                    if (pacmanRect.intersects(fruit.boundingBox)) {
+                        fruits.remove(fruit);
+                        AudioPlayer.EATFRUIT.play();
+                        score += fruit.points;
+                    }
+                }
+                Rectangle pacmanRectGhost = pacman.boundingBox;
+                for (int i = 0; i < ghosts.size(); i++) { //eat ghosts
+                    Ghost ghost = ghosts.get(i);
+                    if (pacmanRectGhost.intersects(ghost.boundingBox)) {
+                        if (ghost.isGhostEatable() == true) {
+                            ghost.eat();
+                            if (this.numOfGhostsEaten() == 1) {
+                                score += 200;
+                            } else if (this.numOfGhostsEaten() == 2) {
+                                score += 400;
+                            } else if (this.numOfGhostsEaten() == 3) {
+                                score += 800;
+                            } else if (this.numOfGhostsEaten() == 4) {
+                                score += 1600;
+                            }
+                        } else if (ghost.isGhostEaten() == true) {
+                            // do nothing
+                        } else {
+                            pacman.die();
+                            for (int j = 0; j < ghosts.size(); j++) {
+                                ghosts.get(j).reset();
+                            }
+                            AudioPlayer.DEATH.play();
+                            numLives--;
+                            isGlobal = true;
+                            globalCount = 0;
+                        }
                     }
                 }
             }
-        } else {
+            else{
+                if(ghostDeadTimer < 1000){
+                    ghostDeadTimer+=dt;
+                }
+                else{
+                    ghostDeadTimer = 0;
+                    ghostDead = false;
+                    for (int i = 0; i < ghosts.size(); i++) {
+                        Ghost ghost = ghosts.get(i);
+                        ghost.justAte = false;
+                    }
+                }
+            }
+        }
+        else {
             pacman.update(dt);
         }
     }
@@ -192,7 +216,7 @@ public class Room implements KeyListener {
     public void draw(Graphics2D g) {
         //Draw background
         g.setColor(Color.black);
-        g.fillRect(0 , 0 , 336 , 492);
+        g.fillRect(0, 0, 336, 492);
         //Draw blocks
         for (int i = 0; i < blocks.size(); i++) {
             Block block = blocks.get(i);
@@ -202,36 +226,37 @@ public class Room implements KeyListener {
         for (int i = 0; i < dots.size(); i++) {
             Dot dot = dots.get(i);
             dot.draw(g);
-        }for (int i = 0; i < sdots.size(); i++) {
+        }
+        for (int i = 0; i < sdots.size(); i++) {
             SuperDot sdot = sdots.get(i);
             sdot.draw(g);
         }
         //Draw number of lives
         GameObject lives = new GameObject() {
-                public void draw(Graphics2D g) {
-                    int lives = spriteI;
-                    for (int i = lives; i > 0; i--) {
-                        this.drawSprite(g, 24, 0, 11, 10+((i-1)*25), 410);
-                    }
+            public void draw(Graphics2D g) {
+                int lives = spriteI;
+                for (int i = lives; i > 0; i--) {
+                    this.drawSprite(g, 24, 0, 11, 10 + ((i - 1) * 25), 410);
                 }
+            }
         };
         lives.spriteI = numLives;
         lives.draw(g);
         //Draw level
         GameObject lvl = new GameObject() {
-                public void draw(Graphics2D g) {
-                    int offSet = 0;
-                    int lvl = spriteI;
-                    for(int i = lvl; i > 0; i--){
-                        this.drawSprite(g,24,i-1,5,312-offSet,410);
-                        offSet+=24;
-                    }
+            public void draw(Graphics2D g) {
+                int offSet = 0;
+                int lvl = spriteI;
+                for (int i = lvl; i > 0; i--) {
+                    this.drawSprite(g, 24, i - 1, 5, 312 - offSet, 410);
+                    offSet += 24;
                 }
+            }
         };
         lvl.spriteI = level;
         lvl.draw(g);
         //Draw gameover
-        if(numLives <= 0){
+        if (numLives <= 0) {
             Symbols gameover = new Symbols("game over", 112, 240);
             gameover.draw(g);
         }
@@ -270,7 +295,7 @@ public class Room implements KeyListener {
             g.drawLine(0, y, PacmanGame.WIDTH, y); //DEMO...DELETE LATER
         }
         //Fruit draws
-        if (!fruits.isEmpty()){
+        if (!fruits.isEmpty()) {
             for (int i = 0; i < fruits.size(); i++) {
                 Fruit fruit = fruits.get(i);
                 fruit.draw(g);
@@ -280,7 +305,9 @@ public class Room implements KeyListener {
         for (int i = 0; i < ghosts.size(); i++) {
             ghosts.get(i).draw(g);
         }
-        pacman.draw(g);
+        if (!ghostDead) {
+            pacman.draw(g);
+        }
     }
 
     public void death (){

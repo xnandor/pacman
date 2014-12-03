@@ -150,6 +150,10 @@ public class Pacman extends GameObject implements KeyListener {
     }
 
     public void reset() {
+        velX = 0;
+        velY = 0;
+        desiredVelX = 0;
+        desiredVelY = 0;
         this.boundingBox = new Rectangle((13*12)+8, 26*12+1, 11, 11);
         dead = false;
     }
