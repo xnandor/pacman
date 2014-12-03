@@ -5,8 +5,18 @@ import java.awt.*;
  */
 public class AnimationObj extends GameObject {
     public int velocity = 0;
+    int speed;
 
     public AnimationObj(int spriteX, int spriteY, int X, int Y, int vel){
+        speed = 6;
+        spriteI = spriteX;
+        spriteJ = spriteY;
+        velocity = vel;
+        this.boundingBox = new Rectangle(X, Y, 11, 11);
+    }
+
+    public AnimationObj(int spriteX, int spriteY, int X, int Y, int vel, int speed) {
+        this.speed = speed;
         spriteI = spriteX;
         spriteJ = spriteY;
         velocity = vel;
@@ -21,7 +31,6 @@ public class AnimationObj extends GameObject {
     }
 
     public void update(float dt){
-        int speed = 6;
         double x = boundingBox.getX();
         double y = boundingBox.getY();
         boundingBox.setLocation((int)x+velocity*speed,(int)y);
