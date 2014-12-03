@@ -32,7 +32,7 @@ public class Fruit extends GameObject{
                 break;
         }
         exists = true;
-        this.boundingBox = new Rectangle((13*12)+8, 26*12+1, 11, 11);
+        this.boundingBox = new Rectangle((13*12)+8, 20*12+1, 11, 11);
     }
 
     public void draw(Graphics2D g){
