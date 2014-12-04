@@ -118,13 +118,13 @@ public class Ghost extends GameObject {
                 exitTime += dt;
             }
             // Ensures that Ghost goes left then down when leaving the GH
-            if(exitTime > 300) {
+            if(exitTime > 0) {
                 // Sets desired velocities
                 this.getNextLocation(x,y);
                 velX = desiredVelX;
                 velY = desiredVelY;
             } else {
-                if(coordX == 0 && hasPassed1 == false) {
+                if(hasPassed1 == false) {
                     velX = -1; velY = 0;
                     hasPassed1 = true;
                 } else if ((coordX == -14 || coordX == 13) && hasPassed2 == false) {
@@ -140,10 +140,10 @@ public class Ghost extends GameObject {
 
         // Update coordinates if Ghost uses shortcut
         if (x > PacmanGame.WIDTH) {
-            boundingBox.setLocation( -10, (int)y );
+            boundingBox.setLocation( -12, (int)y );
             coordX += -89;
         }
-        if (x < -10) {
+        if (x < -12) {
             boundingBox.setLocation( PacmanGame.WIDTH, (int)y );
             coordX += 89;
         }
@@ -583,7 +583,9 @@ public class Ghost extends GameObject {
         if(modeSwitches == 0 || modeSwitches == 2) {
             if(modeTime >= 7000) {
                 modeTime = 0;
-                velX *= -1; velY *= -1;
+                if(isOutOfBox == true) {
+                    velX *= -1; velY *= -1;
+                }
                 modeSwitches++;
                 return true;
             } else {
@@ -592,7 +594,9 @@ public class Ghost extends GameObject {
         } else if(modeSwitches == 4 || modeSwitches == 6) {
             if(modeTime >= 5000) {
                 modeTime = 0;
-                velX *= -1; velY *= -1;
+                if(isOutOfBox == true) {
+                    velX *= -1; velY *= -1;
+                }
                 modeSwitches++;
                 return true;
             } else {
@@ -601,7 +605,9 @@ public class Ghost extends GameObject {
         } else if(modeSwitches == 1 || modeSwitches == 3 || modeSwitches == 5) {
             if(modeTime >= 20000) {
                 modeTime = 0;
-                velX *= -1; velY *= -1;
+                if(isOutOfBox == true) {
+                    velX *= -1; velY *= -1;
+                }
                 modeSwitches++;
                 return false;
             } else {
@@ -691,7 +697,9 @@ public class Ghost extends GameObject {
             ghostOffsetY = 0;
             eatableTime = 0;
             // Reverse direction
-            velX *= -1; velY *= -1;
+            if(isOutOfBox == true) {
+                velX *= -1; velY *= -1;
+            }
         }
         wasEaten = false;
     }
