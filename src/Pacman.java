@@ -23,14 +23,20 @@ public class Pacman extends GameObject implements KeyListener {
     //Desired velocity is used to make sure pacman still turns if key is pressed early.
     int desiredVelX = 0;
     int desiredVelY = 0;
-    int coordX = 0;
-    int coordY = 0;
+    int coordX;
+    int coordY;
     boolean moving = false;
+    boolean cheatEnabled;
+    public int x;
+    public int y;
+    public boolean buttonPress;
 
-    public Pacman(Room room) {
+    public Pacman(Room room, boolean cheat) {
         super();
+        //boundingBox( xcoorUpLeft, ycoorUpLeft, width, height)
         this.boundingBox = new Rectangle((13*12)+8, 26*12+1, 11, 11);
         this.room = room;
+        this.cheatEnabled = cheat;
     }
 
     public void update(float dt) {
@@ -209,6 +215,16 @@ public class Pacman extends GameObject implements KeyListener {
             desiredVelX = 0;
             desiredVelY = 1;
         }
+       if(e.VK_CONTROL == code )  
+       {
+         //if(cheatEnabled == true)
+         //{
+            room.xcoor = getCoordinateX();
+            room.ycoor = getCoordinateY();
+            buttonPress = true;
+            room.buttonPress = buttonPress;
+         //}
+       }
         //suicide switch for testing live tracking
         if (e.VK_DELETE == code){
             room.numLives--;

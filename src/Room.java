@@ -8,9 +8,11 @@ import java.util.ArrayList;
 public class Room implements KeyListener {
 
     public boolean paused = false;
+    public boolean isCheatCodeEnabled;
 
     ArrayList<GameObject> scene = new ArrayList<GameObject>();
     Pacman pacman;
+    Decoy decoy;
     ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
     ArrayList<Block> blocks = new ArrayList<Block>();
     ArrayList<Dot> dots = new ArrayList<Dot>();
@@ -24,6 +26,7 @@ public class Room implements KeyListener {
     int highscore;
     int dotsEaten = 0;
     boolean fruit = false;
+    int x = 0;
     int y = 0; //for debug
     int frame = 0; //for debug
     int globalCount = 0;
@@ -31,13 +34,18 @@ public class Room implements KeyListener {
     boolean isGlobal = false;
     boolean ghostDead = false;
     double ghostDeadTimer = 0;
+    public int xcoor;
+    public int ycoor;
+    public boolean buttonPress;
+
 
     public Room(int level, int prevscore, int lives, int HS) {
         score = prevscore;
         numLives = lives;
         highscore = HS;
         this.level = level;
-        pacman = new Pacman(this);
+        pacman = new Pacman(this, isCheatCodeEnabled);
+        decoy = new Decoy(this, xcoor, ycoor);
         ghosts.add(new Ghost(this,"red"));
         ghosts.add(new Ghost(this,"pink"));
         ghosts.add(new Ghost(this,"blue"));
@@ -301,12 +309,18 @@ public class Room implements KeyListener {
                 fruit.draw(g);
             }
         }
-        
+
         for (int i = 0; i < ghosts.size(); i++) {
             ghosts.get(i).draw(g);
         }
         if (!ghostDead) {
             pacman.draw(g);
+        }
+        pacman.draw(g);
+        //if buttonPress from Pacman.java is true
+        //draw the decoy
+        if(buttonPress == true){
+            decoy.draw(g);
         }
     }
 

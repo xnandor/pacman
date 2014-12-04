@@ -20,6 +20,7 @@ public enum AudioPlayer {
 
     AudioPlayer(String soundFileName) {
         soundFileName = "./media/"+soundFileName;
+        //soundFileName = "C:/Users/Jared Griffith/Documents/Github/pacman/media/"+soundFileName;
         try {
             File soundFile = new File(soundFileName);
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundFile);
