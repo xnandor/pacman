@@ -301,7 +301,7 @@ public class Room implements KeyListener {
                 fruit.draw(g);
             }
         }
-
+        
         for (int i = 0; i < ghosts.size(); i++) {
             ghosts.get(i).draw(g);
         }
@@ -362,8 +362,8 @@ public class Room implements KeyListener {
         return dotTimer;
     }
 
-    public void setDotTimer(int timer) {
-        dotTimer = timer;
+    public void resetDotTimer() {
+        dotTimer = 0;
     }
 
     public int getPacmanX() {
@@ -403,7 +403,7 @@ public class Room implements KeyListener {
     public int numOfGhostsInBox() {
         int count = 0;
         for (int i = 0; i < ghosts.size(); i++) {
-            if(ghosts.get(i).getBoxStatus()) {
+            if(!ghosts.get(i).getBoxStatus()) {
                 count++;
             }
         }

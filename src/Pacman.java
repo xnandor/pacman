@@ -64,11 +64,11 @@ public class Pacman extends GameObject implements KeyListener {
             //Screen Wrap
             if (x > PacmanGame.WIDTH) {
                 boundingBox.setLocation( -12, (int)y );
-                coordX += -88;
+                coordX += -89;
             }
             if (x < -12) {
                 boundingBox.setLocation( PacmanGame.WIDTH, (int)y );
-                coordX += 88;
+                coordX += 89;
             }
             //Reset desired direction
             if (elapsedDirectionTime > 2500) {
@@ -172,6 +172,7 @@ public class Pacman extends GameObject implements KeyListener {
                 coordY--;
             }
         }
+        System.out.println("Coordinates: " + coordX + " " + coordY);
     }
     
     public int getCoordinateX() {
