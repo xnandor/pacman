@@ -374,6 +374,14 @@ public class Room implements KeyListener {
         return pacman.getCoordinateY();
     }
 
+    public int getPacmanVelX() {
+        return pacman.getVelX();
+    }
+
+    public int getPacmanVelY() {
+        return pacman.getVelY();
+    }
+
     public int getPinkX() {
         for (int i = 0; i < ghosts.size(); i++) {
             if(ghosts.get(i).getColor().equals("pink")) {

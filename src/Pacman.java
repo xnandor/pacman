@@ -172,7 +172,6 @@ public class Pacman extends GameObject implements KeyListener {
                 coordY--;
             }
         }
-        //System.out.println("Coordinates: " + coordX + " and " + coordY);
     }
     
     public int getCoordinateX() {
@@ -181,6 +180,14 @@ public class Pacman extends GameObject implements KeyListener {
     
     public int getCoordinateY() {
         return coordY;
+    }
+    
+    public int getVelX() {
+        return velX;
+    }
+    
+    public int getVelY() {
+        return velY;
     }
 
     public void keyPressed(KeyEvent e) {
