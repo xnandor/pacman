@@ -35,6 +35,7 @@ public class Ghost extends GameObject {
     boolean isEaten = false;
     boolean wasEaten = false;
     boolean justAte = false;
+    boolean hasStarted = false;
     boolean hasPassed1 = false;
     boolean hasPassed2 = false;
     boolean chaseOrScatter = false;
@@ -87,7 +88,7 @@ public class Ghost extends GameObject {
         mode besides eaten, increment mode timer. Mode timer 
         is for the chase and scatter modes. */
         chaseOrScatter = this.getGhostMode();
-        if(isEatable == false) {
+        if(isEatable == false && isEaten == false) {
             modeTime += dt;
         } else if(isEaten == false) {
             eatableTime += dt;
@@ -113,7 +114,9 @@ public class Ghost extends GameObject {
             }
 
             // Time spent outside of Ghost House
-            exitTime += dt;
+            if(hasStarted) {
+                exitTime += dt;
+            }
             // Ensures that Ghost goes left then down when leaving the GH
             if(exitTime > 300) {
                 // Sets desired velocities
@@ -127,6 +130,7 @@ public class Ghost extends GameObject {
                 } else if ((coordX == -14 || coordX == 13) && hasPassed2 == false) {
                     velX = 0; velY = 1;
                     hasPassed2 = true;
+                    hasStarted = true;
                 }
             }
             this.updateCoordinates(x,y);
@@ -137,11 +141,11 @@ public class Ghost extends GameObject {
         // Update coordinates if Ghost uses shortcut
         if (x > PacmanGame.WIDTH) {
             boundingBox.setLocation( -10, (int)y );
-            coordX += -88;
+            coordX += -89;
         }
         if (x < -10) {
             boundingBox.setLocation( PacmanGame.WIDTH, (int)y );
-            coordX += 88;
+            coordX += 89;
         }
 
         //Animate Direction
@@ -407,6 +411,7 @@ public class Ghost extends GameObject {
             this.updateCoordinates(x,y);
             if(coordX == 0 && coordY == -36) {
                 isOutOfBox = true;
+                room.resetDotTimer();
             }
         } else {
             if(coordY == -30) {
@@ -453,22 +458,13 @@ public class Ghost extends GameObject {
                 }
                 return false;
             }
-        } else {    // When timer has exceeded five seconds, send out one ghost and reset timer
+        } else {    // When timer has exceeded five seconds, send out one ghost
             int num = room.numOfGhostsInBox();
             if(num == 3 && color.equals("pink")) {  // Pinky gets 1st priority
-                if(isOutOfBox == true) {
-                    room.setDotTimer(0);
-                }
                 return true;
             } else if(num == 2 && color.equals("blue")) {   // Inky gets 2nd priority
-                if(isOutOfBox == true) {
-                    room.setDotTimer(0);
-                }
                 return true;
             } else if(num == 1 && color.equals("orange")) { // Clyde gets 3rd priority
-                if(isOutOfBox == true) {
-                    room.setDotTimer(0);
-                }
                 return true;
             } else {
                 return false;
@@ -513,7 +509,7 @@ public class Ghost extends GameObject {
         isEatable = false;
         isEaten = false;
         wasEaten = false;
-        room.setDotTimer(0);
+        room.resetDotTimer();
     }
 
     // Set target coordinates based on state and color
@@ -581,6 +577,9 @@ public class Ghost extends GameObject {
     // Chase = true, scatter = false
     // Reverse direction when changing modes
     public boolean getGhostMode() {
+        if(!hasStarted) {
+            modeTime = 0;
+        }
         if(modeSwitches == 0 || modeSwitches == 2) {
             if(modeTime >= 7000) {
                 modeTime = 0;

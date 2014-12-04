@@ -17,6 +17,7 @@ public class PacmanGame extends JFrame implements KeyListener {
     public boolean dead = false;
     public boolean paused = false;
     public boolean animate = false;
+    public boolean cheat = false;
     public long dt = 0L;
     public long timePreviousFrame = System.currentTimeMillis();
     public long timeCurrentFrame  = System.currentTimeMillis();
@@ -31,6 +32,12 @@ public class PacmanGame extends JFrame implements KeyListener {
     public int score = 0;
     public int highscore = 0;
     public int lives = 3;
+    
+    //Array that holds the key events
+    //Translates to up up down down left right left right b a
+    int[] sequence = {KeyEvent.VK_UP, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT,
+      KeyEvent.VK_RIGHT, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT,  KeyEvent.VK_B, KeyEvent.VK_A};
+    int currentButton = 0;
 
     public static final int WIDTH = 336;
     public static final int HEIGHT= 480;
@@ -65,8 +72,16 @@ public class PacmanGame extends JFrame implements KeyListener {
                 }
                 @Override
                 public void keyPressed(KeyEvent e) {
-                    int code = e.getKeyCode();
-                    if(KeyEvent.VK_ENTER == code) start = false;
+                     int code = e.getKeyCode();
+                    if(checkCode(code))
+                    {  
+                           start = false;
+                           cheat = true;
+                    }
+                    else
+                    {
+                      if(KeyEvent.VK_ENTER == code){ start = false;}
+                    }
                 }
                 @Override
                 public void keyReleased(KeyEvent keyEvent) {
@@ -92,6 +107,11 @@ public class PacmanGame extends JFrame implements KeyListener {
         g = frame.getContentPane().getGraphics();
         frame.getContentPane().add(gamePanel);
         currentRoom = new Room(level,score,lives,highscore); //Start at level one
+        //if cheat is set to true then the current room object's 
+        //boolean is also set to true
+        if (cheat == true) {
+          currentRoom.isCheatCodeEnabled = true;
+        }
         gamePanel.room = currentRoom;
         frame.addKeyListener(this);
         frame.addKeyListener(currentRoom);
@@ -191,7 +211,17 @@ public class PacmanGame extends JFrame implements KeyListener {
                 @Override
                 public void keyPressed(KeyEvent e) {
                     int code = e.getKeyCode();
-                    if(KeyEvent.VK_ENTER == code){start = false;}
+                    //If the method ever returns true then start game
+                    //and set cheat to true. 
+                    if(checkCode(code))
+                    {  
+                           start = false;
+                           cheat = true;
+                    }
+                    else
+                    {
+                      if(KeyEvent.VK_ENTER == code){ start = false;}
+                    }
                 }
 
                 @Override
@@ -292,6 +322,32 @@ public class PacmanGame extends JFrame implements KeyListener {
             Spl.draw(g2);
         }
     }
+       //This function is called to check if key sequence  
+       //matches the sequence array
+       boolean checkCode(int keyPressed){
+      
+        //Key sequence pressed is correct thus far
+        if(keyPressed == sequence[currentButton]){
+          
+            currentButton++;
+            
+           //return true when last button is pressed
+           if(currentButton == sequence.length){
+
+            //If sequence is accepted reset counter to zero
+            //No array out of bounds exceptions
+            currentButton = 0;
+
+            return true;
+           }
+       }
+       else{
+        //Reset currentButton if not the right sequence
+        currentButton = 0;
+       }
+
+    return false;
+  }
 
     public static void main(String[] args) {
         PacmanGame game = new PacmanGame();
