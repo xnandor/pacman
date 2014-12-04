@@ -203,7 +203,7 @@ public class Room implements KeyListener {
                 }
             }
             else{
-                if(ghostDeadTimer < 1000){
+                if(ghostDeadTimer < 500){
                     ghostDeadTimer+=dt;
                 }
                 else{
@@ -316,7 +316,6 @@ public class Room implements KeyListener {
         if (!ghostDead) {
             pacman.draw(g);
         }
-        pacman.draw(g);
         //if buttonPress from Pacman.java is true
         //draw the decoy
         if(buttonPress == true){
