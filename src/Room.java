@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Room implements KeyListener {
 
     public boolean paused = false;
-    public boolean isCheatCodeEnabled;
+    public boolean isCheatCodeEnabled = false;
 
     ArrayList<GameObject> scene = new ArrayList<GameObject>();
     Pacman pacman;
@@ -99,9 +99,22 @@ public class Room implements KeyListener {
                 sdots.add(sdot);
             }
         }
+        // x = -1, 28   y = 16, 18
+        Block block1 = new Block(12, -1, 16);
+        Block block2 = new Block(12, -1, 18);
+        Block block3 = new Block(12, 28, 16);
+        Block block4 = new Block(12, 28, 18);
+        blocks.add(block1);
+        blocks.add(block2);
+        blocks.add(block3);
+        blocks.add(block4);
     }
 
     public void update(float dt) {
+        if (isCheatCodeEnabled) {
+            isCheatCodeEnabled = false;
+            numLives+=7;
+        }
         if (!pacman.dead) {
             for (int i = 0; i < ghosts.size(); i++) {
                 Ghost ghost = ghosts.get(i);
