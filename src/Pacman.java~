@@ -204,15 +204,11 @@ public class Pacman extends GameObject implements KeyListener {
             desiredVelY = 1;
         }
         
-       if(e.VK_CONTROL == code )  
-       {
-         //if(cheatEnabled == true)
-         //{  
-            room.xcoor = getCoordinateX();
-            room.ycoor = getCoordinateY();
-            buttonPress = true;
-            room.buttonPress = buttonPress;
-         //}
+       if(e.VK_CONTROL == code )  {
+         room.xcoor = getCoordinateX();
+         room.ycoor = getCoordinateY();
+         buttonPress = true;
+         room.buttonPress = buttonPress;
                  
        }
         //suicide switch for testing live tracking
