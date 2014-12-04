@@ -217,7 +217,11 @@ public class PacmanGame extends JFrame implements KeyListener {
             long timeComputationEnd = System.currentTimeMillis();
             long timeComputationTaken = timeComputationEnd - timeComputationStart;
             long timeToSleep = this.timeInterval - timeComputationTaken;
-            Thread.sleep(timeToSleep);
+            if (timeToSleep >= 0) {
+                Thread.sleep(timeToSleep);
+            } else {
+                Thread.sleep(0);
+            }
         } catch (Exception e) {
             System.err.println("ERROR: Could not sleep main thread.");
             e.printStackTrace();

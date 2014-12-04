@@ -334,7 +334,7 @@ public class Room implements KeyListener {
         }
         return free;
     }
-    
+
     public boolean isLocationFree(Rectangle r, boolean isGhostReturning) {
         boolean free = true;
         for (int i = 0; i < blocks.size(); i++) {
@@ -349,31 +349,39 @@ public class Room implements KeyListener {
         }
         return free;
     }
-    
+
     public int getScore() {
         return score;
     }
-    
+
     public int getGlobalCount() {
         return globalCount;
     }
-    
+
     public int getDotTimer() {
         return dotTimer;
     }
-    
+
     public void setDotTimer(int timer) {
         dotTimer = timer;
     }
-    
+
     public int getPacmanX() {
         return pacman.getCoordinateX();
     }
-    
+
     public int getPacmanY() {
         return pacman.getCoordinateY();
     }
-    
+
+    public int getPacmanVelX() {
+        return pacman.getVelX();
+    }
+
+    public int getPacmanVelY() {
+        return pacman.getVelY();
+    }
+
     public int getPinkX() {
         for (int i = 0; i < ghosts.size(); i++) {
             if(ghosts.get(i).getColor().equals("pink")) {
@@ -382,7 +390,7 @@ public class Room implements KeyListener {
         }
         return 0;
     }
-    
+
     public int getPinkY() {
         for (int i = 0; i < ghosts.size(); i++) {
             if(ghosts.get(i).getColor().equals("pink")) {
@@ -391,7 +399,7 @@ public class Room implements KeyListener {
         }
         return 0;
     }
-    
+
     public int numOfGhostsInBox() {
         int count = 0;
         for (int i = 0; i < ghosts.size(); i++) {
@@ -401,7 +409,7 @@ public class Room implements KeyListener {
         }
         return count;
     }
-    
+
     public int numOfGhostsEaten() {
         int count = 0;
         for (int i = 0; i < ghosts.size(); i++) {
