@@ -172,7 +172,7 @@ public class Pacman extends GameObject implements KeyListener {
                 coordY--;
             }
         }
-        System.out.println("Coordinates: " + coordX + " " + coordY);
+        //System.out.println("Coordinates: " + coordX + " " + coordY);
     }
     
     public int getCoordinateX() {
